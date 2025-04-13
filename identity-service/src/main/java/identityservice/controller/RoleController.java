@@ -20,12 +20,16 @@ public class RoleController {
     RoleService roleService;
 
     @PostMapping("/create")
-    public ApiResponse<RoleResponseDto> createRole(@RequestBody RoleRequestDto rolesRequestDto) {
-        return roleService.createRole(rolesRequestDto);
+    ApiResponse<RoleResponseDto> createRole(@RequestBody RoleRequestDto roleDto) {
+        return ApiResponse.<RoleResponseDto>builder()
+                .result(roleService.createRole(roleDto))
+                .build();
     }
 
     @GetMapping("/all")
-    public ApiResponse<List<RoleResponseDto>> getAllRoles() {
-        return roleService.getAllRoles();
+    ApiResponse<List<RoleResponseDto>> getAllRoles() {
+        return ApiResponse.<List<RoleResponseDto>>builder()
+                .result(roleService.getAllRoles())
+                .build();
     }
 }

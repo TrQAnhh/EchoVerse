@@ -113,18 +113,20 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String buildScope(User user) {
+    private String buildScope(User user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
+
         if (!CollectionUtils.isEmpty(user.getRoles())) {
             user.getRoles().forEach(role -> {
-                stringJoiner.add("ROLE_" + role.getRoleName());
+                stringJoiner.add("ROLE_" + role.getName());
                 if (!CollectionUtils.isEmpty(role.getPermissions())) {
-                    role.getPermissions().forEach(permission ->
-                            stringJoiner.add(permission.getPermissionName())
-                    );
+                    role.getPermissions().forEach(permission -> {
+                        stringJoiner.add(permission.getName());
+                    });
                 }
             });
         }
+
         return stringJoiner.toString();
     }
 

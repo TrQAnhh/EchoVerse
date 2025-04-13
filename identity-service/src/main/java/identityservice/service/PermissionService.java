@@ -22,30 +22,20 @@ public class PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;
 
-    public ApiResponse<PermissionResponseDto> createPermission(PermissionRequestDto permissionRequestDto) {
-        Permission permission = permissionMapper.toPermission(permissionRequestDto);
-        Permission result = permissionRepository.save(permission);
-        return ApiResponse.<PermissionResponseDto>builder()
-                .code(200)
-                .result(permissionMapper.toPermissionsResponseDto(result))
-                .build();
+    public PermissionResponseDto createPermission(PermissionRequestDto permissionDto) {
+        Permission permission = permissionMapper.toPermission(permissionDto);
+
+        permission = permissionRepository.save(permission);
+        return permissionMapper.toPermissionsResponseDto(permission);
     }
 
-    public ApiResponse<List<PermissionResponseDto>> getAllPermissions() {
-        List<Permission> permissions = permissionRepository.findAll();
-        List<PermissionResponseDto> responseDtoList = permissions.stream()
-                .map(permissionMapper::toPermissionsResponseDto)
-                .toList();
-        return ApiResponse.<List<PermissionResponseDto>>builder()
-                .code(200)
-                .result(responseDtoList)
-                .build();
+    public List<PermissionResponseDto> getAllPermissions() {
+        var permissions = permissionRepository.findAll();
+        return permissions.stream().map(permissionMapper::toPermissionsResponseDto).toList();
     }
 
-    public ApiResponse<Void> deletePermission(String permissionName) {
-        permissionRepository.deleteByPermissionName(permissionName);
-        return ApiResponse.<Void>builder()
-                .code(200)
-                .build();
+    public void deletePermission(String permission) {
+        permissionRepository.deleteById(permission);
     }
+
 }

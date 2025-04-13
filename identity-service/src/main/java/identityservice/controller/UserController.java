@@ -1,12 +1,15 @@
 package identityservice.controller;
 
+import identityservice.dto.request.UserCreationRequestDto;
 import identityservice.dto.request.UserUpdateRequestDto;
 import identityservice.dto.response.ApiResponse;
 import identityservice.dto.response.UserResponseDto;
 import identityservice.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +23,32 @@ public class UserController {
 
     UserService userService;
 
-    @GetMapping("/all")
-    public ApiResponse<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> users = userService.getAllUsers();
+    @GetMapping
+    ApiResponse<List<UserResponseDto>> getUsers(@RequestParam(required = false) Long id) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("Username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+
         return ApiResponse.<List<UserResponseDto>>builder()
-                .result(users)
-                .code(200)
-                .message("Successfully fetched all users")
+                .result(userService.getUsers(id))
                 .build();
     }
 
-    @GetMapping("/get-user/{userId}")
-    public UserResponseDto getUserById(@PathVariable String userId) {
-        return userService.getUserById(userId);
-    }
-
-    @GetMapping("/my-info")
-    public UserResponseDto getMyInfo() {
+    @GetMapping("/personal")
+    UserResponseDto userInformation() {
         return userService.getMyInfo();
     }
 
-    @PutMapping("/update/{id}")
-    public UserResponseDto updateUser(@PathVariable String id, @RequestBody UserUpdateRequestDto userUpdateRequestDto) {
-        return userService.updateUser(id, userUpdateRequestDto);
+
+    @PutMapping("/{userId}")
+    UserResponseDto updateUser(@RequestBody UserUpdateRequestDto userDto, @PathVariable Long userId) {
+        return userService.updateUser(userId, userDto);
+    }
+
+    @DeleteMapping("/{userId}")
+    String deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return "Deleted user with id: " + userId;
     }
 }

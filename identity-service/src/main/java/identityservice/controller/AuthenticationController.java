@@ -25,8 +25,10 @@ public class AuthenticationController {
     UserService userService;
 
     @PostMapping("/register")
-    ApiResponse<UserResponseDto> register(@RequestBody @Valid UserCreationRequestDto userCreationRequestDto) {
-        return userService.createUser(userCreationRequestDto);
+    ApiResponse<UserResponseDto> register(@RequestBody @Valid UserCreationRequestDto userDto) {
+        return ApiResponse.<UserResponseDto>builder()
+                .result(userService.createUser(userDto))
+                .build();
     }
 
     @PostMapping("/login")

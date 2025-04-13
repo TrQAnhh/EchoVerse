@@ -3,7 +3,6 @@ package identityservice.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -12,9 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponseDto {
+    long id;
     String username;
-    String email;
-    String phoneNumber;
-    LocalDate dateOfBirth;
     Set<RoleResponseDto> roles;
 }

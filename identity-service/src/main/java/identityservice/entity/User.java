@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -17,14 +17,36 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
 
+    @Column(name="username", unique = true)
     String username;
+
+    @Column(name="password")
     String password;
-    String email;
-    String phoneNumber;
-    LocalDate dateOfBirth;
+
+    @Column(name="create_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createdt;
+
+    @Column(name="update_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    Date updatedt;
+
+    @PrePersist
+    public void setCreatedDate() {
+        this.createdt = new Date();
+        this.updatedt = new Date();
+    }
+
+    @PreUpdate
+    public void setUpdatedDate() {
+        this.updatedt = new Date();
+    }
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    boolean isDeleted;
 
     @ManyToMany
     @JoinTable(

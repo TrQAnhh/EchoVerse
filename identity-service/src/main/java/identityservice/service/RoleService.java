@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,28 +24,28 @@ public class RoleService {
     PermissionRepository permissionRepository;
     RoleMapper roleMapper;
 
-    public ApiResponse<RoleResponseDto> createRole(RoleRequestDto rolesRequestDto) {
+    public RoleResponseDto createRole(RoleRequestDto rolesRequestDto) {
         var role = roleMapper.toRole(rolesRequestDto);
-        var permissions = permissionRepository.findAllByPermissionNameIn(rolesRequestDto.getPermissions());
 
+        log.info("ROLES: {}", role);
+
+        var permissions = permissionRepository.findAllById(rolesRequestDto.getPermissions());
+        log.info("permissions: {}", permissions);
         role.setPermissions(new HashSet<>(permissions));
 
+        log.info("roles: {}", role.getPermissions().stream().toList());
+
         role = roleRepository.save(role);
-        return ApiResponse.<RoleResponseDto>builder()
-                .code(200)
-                .result(roleMapper.toRolesResponseDto(role))
-                .build();
+        return roleMapper.toRoleResponse(role);
     }
 
-    public ApiResponse<List<RoleResponseDto>> getAllRoles() {
+    public List<RoleResponseDto> getAllRoles() {
         var roles = roleRepository.findAll();
-        return ApiResponse.<List<RoleResponseDto>>builder()
-                .code(200)
-                .result(roles.stream().map(roleMapper::toRolesResponseDto).toList())
-                .build();
+        return roles.stream().map(roleMapper::toRoleResponse).collect(Collectors.toList());
     }
 
-    public void deleteRole(String roleName) {
-        roleRepository.deleteByRoleName(roleName);
+    public void deleteRole(String role) {
+        roleRepository.deleteById(role);
     }
+
 }

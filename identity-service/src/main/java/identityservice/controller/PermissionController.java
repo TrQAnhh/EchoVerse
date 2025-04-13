@@ -20,12 +20,15 @@ public class PermissionController {
     PermissionService permissionService;
 
     @GetMapping("/all")
-    public ApiResponse<List<PermissionResponseDto>> getAllPermissions() {
-        return permissionService.getAllPermissions();
+    ApiResponse<List<PermissionResponseDto>> getAllPermissions() {
+        return ApiResponse.<List<PermissionResponseDto>>builder()
+                .result(permissionService.getAllPermissions())
+                .build();
     }
 
     @PostMapping("/create")
     public ApiResponse<PermissionResponseDto> createPermission(@RequestBody PermissionRequestDto permissionRequestDto) {
-        return permissionService.createPermission(permissionRequestDto);
-    }
+        return ApiResponse.<PermissionResponseDto>builder()
+                .result(permissionService.createPermission(permissionRequestDto))
+                .build();    }
 }

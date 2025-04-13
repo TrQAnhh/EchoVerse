@@ -15,12 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreationRequestDto {
-    @NotEmpty(message = "NOT_NULL_CONSTRAINT")
-    String username;
-
-    @NotEmpty(message = "NOT_NULL_CONSTRAINT")
-    String password;
+public class ProfileCreationRequestDto {
+    long userId;
 
     String email;
 

@@ -1,15 +1,18 @@
 package identityservice.service;
 
+import identityservice.constant.PredefinedRole;
 import identityservice.dto.request.UserCreationRequestDto;
 import identityservice.dto.request.UserUpdateRequestDto;
-import identityservice.dto.response.ApiResponse;
 import identityservice.dto.response.UserResponseDto;
+import identityservice.entity.Role;
 import identityservice.entity.User;
 import identityservice.exception.AppException;
 import identityservice.exception.ErrorCode;
+import identityservice.mapper.ProfileMapper;
 import identityservice.mapper.UserMapper;
 import identityservice.repository.RoleRepository;
 import identityservice.repository.UserRepository;
+import identityservice.repository.httpclient.ProfileClient;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,83 +35,69 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
+    ProfileMapper profileMapper;
+    ProfileClient profileClient;
 
-    public ApiResponse<UserResponseDto> createUser(UserCreationRequestDto userCreationRequestDto) {
+    public UserResponseDto createUser(UserCreationRequestDto userDto) {
+        if (userRepository.existsByUsername(userDto.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
 
-        if(userCreationRequestDto.getPhoneNumber() != null) {
-            if (userRepository.findByPhoneNumber(userCreationRequestDto.getPhoneNumber()).isPresent()) {
-                throw new AppException(ErrorCode.PHONE_NUMBER_EXISTED);
-            }
-        }
+        User user = userMapper.toUser(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        if (userCreationRequestDto.getEmail() != null) {
-            if (userRepository.findByEmail(userCreationRequestDto.getEmail()).isPresent()) {
-                throw new AppException(ErrorCode.EMAIL_EXISTED);
-            }
-        }
+        log.info("input: {}", userDto);
 
-        var existedUser = userRepository.findByUsername(userCreationRequestDto.getUsername());
 
-        if (existedUser.isPresent()) {
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
-        User user = userMapper.toUser(userCreationRequestDto);
+        user.setRoles(roles);
+        user = userRepository.save(user);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        var profileRequest = profileMapper.toProfileCreationRequest(userDto);
+        profileRequest.setUserId(user.getId());
 
-        ApiResponse<UserResponseDto> response = new ApiResponse<>();
-        response.setCode(200);
-        response.setMessage("User registered successfully");
+        var profile = profileClient.createProfile(profileRequest);
+        log.info("profile: {}", profile);
 
-        List<String> roleNames = userCreationRequestDto.getRoles();
-        if (roleNames == null || roleNames.isEmpty()) {
-            roleNames = List.of("USER");
-        }
-
-        var roles = roleRepository.findAllByRoleName(roleNames);
-        user.setRoles(new HashSet<>(roles));
-
-        user.setRoles(new HashSet<>(roles));
-
-        response.setResult(userMapper.toUserResponseDto(userRepository.save(user)));
-
-        return response;
+        return userMapper.toUserResponse(user);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponseDto> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toUserResponseDto)
-                .collect(Collectors.toList());
-    }
+    public List<UserResponseDto> getUsers(Long id) {
+        if (id != null) {
+            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+            log.info(user.getRoles().toString());
 
-    @PostAuthorize("returnObject.username == authentication.name")
-    public UserResponseDto getUserById(String userId) {
-        return userMapper.toUserResponseDto(userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found")));
+            return List.of(userMapper.toUserResponse(user));
+        }
+        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
     public UserResponseDto getMyInfo() {
         var context = SecurityContextHolder.getContext();
-        var username = context.getAuthentication().getName();
-        return userMapper.toUserResponseDto(userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
+        String username = context.getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
+
+        return userMapper.toUserResponse(user);
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
-    public UserResponseDto updateUser(String id, UserUpdateRequestDto userUpdateRequestDto) {
+    public UserResponseDto updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-        User existedUser = userRepository.findById(id).
-                orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        userMapper.updateUser(existedUser, userUpdateRequestDto);
+        userMapper.userUpdate(user, userUpdateRequestDto);
+        user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
 
-        existedUser.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
+        var roles = roleRepository.findAllById(userUpdateRequestDto.getRoles());
+        user.setRoles(new HashSet<>(roles));
 
-        var roles = roleRepository.findAllByRoleName(userUpdateRequestDto.getRoles());
-        existedUser.setRoles(new HashSet<>(roles));
+        return userMapper.toUserResponse(userRepository.save(user));
+    }
 
-        return userMapper.toUserResponseDto(userRepository.save(existedUser));
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
 }
