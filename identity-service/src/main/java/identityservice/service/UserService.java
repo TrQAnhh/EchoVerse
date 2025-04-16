@@ -85,7 +85,7 @@ public class UserService {
 
     @PostAuthorize("returnObject.username == authentication.name")
     public UserResponseDto updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.userUpdate(user, userUpdateRequestDto);
         user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));

@@ -26,10 +26,23 @@ public class RoleController {
                 .build();
     }
 
+    @PutMapping("/{roleId}")
+    ApiResponse<Object> updateRole(@PathVariable String roleId, @RequestBody RoleRequestDto roleDto) {
+        return ApiResponse.builder()
+                .result(roleService.updateRole(roleId,roleDto))
+                .build();
+    }
+
     @GetMapping("/all")
     ApiResponse<List<RoleResponseDto>> getAllRoles() {
         return ApiResponse.<List<RoleResponseDto>>builder()
                 .result(roleService.getAllRoles())
                 .build();
+    }
+
+    @DeleteMapping("/{roleId}")
+    public String deleteRole(@PathVariable String roleId){
+        roleService.deleteRole(roleId);
+        return "Deleted a permission with id: " + roleId;
     }
 }
