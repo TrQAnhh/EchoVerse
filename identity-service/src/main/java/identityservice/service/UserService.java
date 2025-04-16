@@ -48,14 +48,14 @@ public class UserService {
 
 
         HashSet<Role> roles = new HashSet<>();
-        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+        roles.add(roleRepository.findByRoleName(PredefinedRole.USER_ROLE));
 
         user.setRoles(roles);
         user = userRepository.save(user);
 
         var profileRequest = profileMapper.toProfileCreationRequest(userDto);
         profileRequest.setUserId(user.getId());
-
+        System.out.println(profileRequest);
         var profile = profileClient.createProfile(profileRequest);
         log.info("profile: {}", profile);
 
@@ -90,8 +90,17 @@ public class UserService {
         userMapper.userUpdate(user, userUpdateRequestDto);
         user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
 
-        var roles = roleRepository.findAllById(userUpdateRequestDto.getRoles());
-        user.setRoles(new HashSet<>(roles));
+        HashSet<Role> roles = new HashSet<>();
+        for (String roleName : userUpdateRequestDto.getRoles()) {
+            Role role = roleRepository.findByRoleName(roleName);
+            if (role != null) {
+                roles.add(role);
+            } else {
+                log.warn("Role with name '{}' not found", roleName);
+            }
+        }
+
+        user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepository.save(user));
     }

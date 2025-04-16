@@ -24,12 +24,12 @@ public class UserProfileController {
         return userProfileService.getProfile(id);
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/user/edit/{id}")
     UserProfileResponse editProfile(@PathVariable long id, @RequestBody ProfileCreationRequest request) {
         return userProfileService.editProfile(id, request);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/user/delete/{id}")
     UserProfileResponse deleteProfile(@PathVariable long id) {
         return userProfileService.deleteProfile(id);
     }

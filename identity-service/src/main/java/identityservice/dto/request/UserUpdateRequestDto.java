@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class UserUpdateRequestDto {
+    String username;
     String email;
     String password;
     LocalDate date_of_birth;

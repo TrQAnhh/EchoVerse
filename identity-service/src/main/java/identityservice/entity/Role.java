@@ -16,7 +16,10 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
     @Id
-    String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
+    @Column(name = "role_name")
+    String roleName;
     String description;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -3,6 +3,8 @@ package identityservice.service;
 import identityservice.dto.request.RoleRequestDto;
 import identityservice.dto.response.ApiResponse;
 import identityservice.dto.response.RoleResponseDto;
+import identityservice.entity.Permission;
+import identityservice.entity.Role;
 import identityservice.mapper.RoleMapper;
 import identityservice.repository.PermissionRepository;
 import identityservice.repository.RoleRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +28,23 @@ public class RoleService {
     RoleMapper roleMapper;
 
     public RoleResponseDto createRole(RoleRequestDto rolesRequestDto) {
-        var role = roleMapper.toRole(rolesRequestDto);
+        Role role = roleMapper.toRole(rolesRequestDto);
 
         log.info("ROLES: {}", role);
 
-        var permissions = permissionRepository.findAllById(rolesRequestDto.getPermissions());
+        Set<Permission> permissions = new HashSet<>();
+
+        for (String permissionName : rolesRequestDto.getPermissions()) {
+            Permission permission = permissionRepository.findByPermissionName(permissionName);
+            if (permission != null) {
+                permissions.add(permission);
+            } else {
+                log.warn("Permission with name {} not found", permissionName);
+            }
+        }
+
         log.info("permissions: {}", permissions);
+
         role.setPermissions(new HashSet<>(permissions));
 
         log.info("roles: {}", role.getPermissions().stream().toList());
