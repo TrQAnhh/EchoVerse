@@ -11,11 +11,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "permissions")
 public class Permission {
     @Id
     String name;
-
-    String permissionName;
     String description;
 }
