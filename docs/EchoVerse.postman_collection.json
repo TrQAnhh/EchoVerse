@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "ed149014-6b65-4560-bf22-616999e28f20",
+		"name": "EchoVerse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37751783"
+	},
+	"item": [
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get an user by user's id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users/3",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a user by user's id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"password\": \"Tranquocanh@12345\",\r\n    \"date_of_birth\": \"2004-10-28\",\r\n    \"middleName\": \"Quoc\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\",\r\n    \"following\": [],\r\n    \"followers\": [],\r\n    \"roles\": [\"USER\"]  \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users/update-info/26",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users",
+										"update-info",
+										"26"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Create a new role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"roleName\": \"VIEWER\",\r\n  \"description\": \"User who can watch and interact in live streams.\",\r\n  \"permissions\": [\"SUBCRIBE\",\"SEND_MESSAGE\",\"REPORT\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/roles/create",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"roles",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all roles",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDIyMzQ0ODksImlhdCI6MTc0MjIzMDg4OSwic2NvcGUiOiIifQ.idslJ_jqfJjFYyt8GADiY-6jeyGmUit9XL-fCdshYSuybhbL-g7VExiT0atrDSwhU_spccaEry3bi2roGDh0jQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}/roles/all",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"roles",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Permission",
+					"item": [
+						{
+							"name": "Get all permissions",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiVHJRQW5oaCIsImV4cCI6MTc0MjIzMDMzMiwiaWF0IjoxNzQyMjI2NzMyLCJzY29wZSI6IiJ9.WDevd2Cf-4YwTEnRkM8ZKvBFddMe_lyOd9XAGzfLV6wPzCkB5xcXZb6d2mE6rrIeyEKZx8Y2Q-VTOMWHf8rTfQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/permissions/all",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"permissions",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDIyMzE0MzYsImlhdCI6MTc0MjIyNzgzNiwic2NvcGUiOiIifQ.skr50iGT2QUCxdjbqQXfG5QVMBC8Kh-8LvoIbS-e67tzijRPzDqv3zODQNpYLQ9s_XDgVa3PoBuaujG-e7Mdeg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"permissionName\": \"SEND_MESSAGE\",\r\n    \"description\": \"Ability to send chat messages during a live stream.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/permissions/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"permissions",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"let token = response.result.token;\r",
+											"pm.environment.set(\"AUTH_TOKEN\", token);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/login",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDI1NDE0MTEsImlhdCI6MTc0MjUzNzgxMSwianRpIjoiZmExNWMwNzctZDBmYS00NGFjLTg2MTAtYWY5NmI0MTU0YTNjIiwic2NvcGUiOiJST0xFX0FETUlOIn0.bW216kQENLFGV_rRL4cCurIEsyxttlmJdQhK17aPQFVa20Lw46WA1wD71HGjpggb6in9dTCEd2TLMRLw0i5jRA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/logout",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Introspect",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDM4NTg0MTIsImlhdCI6MTc0Mzg1NDgxMiwianRpIjoiNmFmYzRlNjMtYmFiYy00MzlhLThjMDUtYzE1NjkwYjMyNDAzIiwic2NvcGUiOiJST0xFX0FETUlOIn0.WlXmf8mzWJL3ftGk17JsfAJ44IUGwcc4ZBTT3zRf8Npl9immP-HZFajWyC1f35blIgl9ELsCgEgfebKAT03bXQ\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/introspect",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"introspect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"TrQAnhh\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/api/identity/auth/register",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"api",
+										"identity",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Create user' profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 26,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/internal/user",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"internal",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a profile by profile's id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/9",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user's profile by profile's id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 28,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2811111@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/edit/9",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"edit",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user's profile by profile's id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/delete/8",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"delete",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
