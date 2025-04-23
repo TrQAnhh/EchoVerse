@@ -9,6 +9,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionResponseDto {
-    String permissionName;
+    String name;
     String description;
 }

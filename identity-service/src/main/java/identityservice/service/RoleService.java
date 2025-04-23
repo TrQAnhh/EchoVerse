@@ -1,8 +1,9 @@
 package identityservice.service;
 
 import identityservice.dto.request.RoleRequestDto;
-import identityservice.dto.response.ApiResponse;
 import identityservice.dto.response.RoleResponseDto;
+import identityservice.exception.AppException;
+import identityservice.exception.ErrorCode;
 import identityservice.mapper.RoleMapper;
 import identityservice.repository.PermissionRepository;
 import identityservice.repository.RoleRepository;
@@ -25,6 +26,9 @@ public class RoleService {
     RoleMapper roleMapper;
 
     public RoleResponseDto createRole(RoleRequestDto rolesRequestDto) {
+        roleRepository.findById(rolesRequestDto.getName())
+                .ifPresent(role -> { throw new AppException(ErrorCode.ROLE_ALREADY_EXISTS); });
+
         var role = roleMapper.toRole(rolesRequestDto);
 
         log.info("ROLES: {}", role);
@@ -44,8 +48,19 @@ public class RoleService {
         return roles.stream().map(roleMapper::toRoleResponse).collect(Collectors.toList());
     }
 
-    public void deleteRole(String role) {
-        roleRepository.deleteById(role);
+    public RoleResponseDto updateRole(String roleId, RoleRequestDto roleRequestDto) {
+        var existingRole = roleRepository.findById(roleId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));;
+
+        var permissions = permissionRepository.findAllById(roleRequestDto.getPermissions());
+        existingRole.setPermissions(new HashSet<>(permissions));
+
+        roleMapper.updateRole(existingRole,roleRequestDto);
+        return roleMapper.toRoleResponse(roleRepository.save(existingRole));
+    }
+
+    public void deleteRole(String roleId) {
+        roleRepository.deleteById(roleId);
     }
 
 }
