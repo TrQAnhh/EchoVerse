@@ -70,7 +70,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     }
 
     private boolean isPublicEndpoint(ServerHttpRequest request) {
-        return Arrays.stream(publicEndpoints).anyMatch(s -> request.getURI().getPath().matches(apiPrefix + s));
+        return Arrays.stream(publicEndpoints).anyMatch(s -> request.getURI().getPath().equals(apiPrefix + s));
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
