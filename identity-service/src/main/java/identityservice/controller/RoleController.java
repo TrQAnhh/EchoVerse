@@ -19,7 +19,7 @@ import java.util.List;
 public class RoleController {
     RoleService roleService;
 
-    @PostMapping("/create")
+    @PostMapping("")
     ApiResponse<RoleResponseDto> createRole(@RequestBody RoleRequestDto roleDto) {
         return ApiResponse.<RoleResponseDto>builder()
                 .result(roleService.createRole(roleDto))
@@ -33,7 +33,7 @@ public class RoleController {
                 .build();
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     ApiResponse<List<RoleResponseDto>> getAllRoles() {
         return ApiResponse.<List<RoleResponseDto>>builder()
                 .result(roleService.getAllRoles())

@@ -63,14 +63,16 @@ public class UserService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponseDto> getUsers(Long id) {
-        if (id != null) {
+    public List<UserResponseDto> getUsers() {
+        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponseDto getUser(Long id) {
             User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
             log.info(user.getRoles().toString());
 
-            return List.of(userMapper.toUserResponse(user));
-        }
-        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+            return userMapper.toUserResponse(user);
     }
 
     @PostAuthorize("returnObject.username == authentication.name")

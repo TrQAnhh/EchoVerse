@@ -24,15 +24,17 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    ApiResponse<List<UserResponseDto>> getUsers(@RequestParam(required = false) Long id) {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
-
+    ApiResponse<List<UserResponseDto>> getUsers() {
         return ApiResponse.<List<UserResponseDto>>builder()
-                .result(userService.getUsers(id))
+                .result(userService.getUsers())
                 .build();
+    }
+
+    @GetMapping("/{userId}")
+    ApiResponse<UserResponseDto> getUser(Long id) {
+        return ApiResponse.<UserResponseDto>builder().
+                result(userService.getUser(id))
+        .build();
     }
 
     @GetMapping("/personal")

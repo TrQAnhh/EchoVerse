@@ -19,14 +19,14 @@ import java.util.List;
 public class PermissionController {
     PermissionService permissionService;
 
-    @GetMapping("/all")
+    @GetMapping()
     ApiResponse<List<PermissionResponseDto>> getAllPermissions() {
         return ApiResponse.<List<PermissionResponseDto>>builder()
                 .result(permissionService.getAllPermissions())
                 .build();
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ApiResponse<PermissionResponseDto> createPermission(@RequestBody PermissionRequestDto permissionRequestDto) {
         return ApiResponse.<PermissionResponseDto>builder()
                 .result(permissionService.createPermission(permissionRequestDto))

@@ -39,16 +39,12 @@ public class SecurityConfig {
             "/auth/refresh-token"
     };
 
-    final String[] ADMIN_ENDPOINTS = {
-            "/permissions/**",
-            "/roles/**",
-            "/users"
-    };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS)
                 .permitAll()
+                .requestMatchers("/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated());
 
