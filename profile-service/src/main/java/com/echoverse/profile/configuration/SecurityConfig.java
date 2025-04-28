@@ -1,4 +1,4 @@
-package identityservice.configuration;
+package com.echoverse.profile.configuration;
 
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,11 @@ import org.springframework.web.filter.CorsFilter;
 @EnableMethodSecurity
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class SecurityConfig {
-
-    @Value("${jwt.signer-key}")
-    String secretKey;
-
     @Autowired
     CustomJwtDecoder customJwtDecoder;
 
     final String[] PUBLIC_ENDPOINTS = {
-            "/auth/register",
-            "/auth/login",
-            "/auth/introspect",
-            "/auth/logout",
-            "/auth/refresh-token"
-    };
-
-    final String[] ADMIN_ENDPOINTS = {
-            "/permissions/**",
-            "/roles/**",
-            "/users"
+            "/internal/user",
     };
 
     @Bean

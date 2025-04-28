@@ -1,4 +1,4 @@
-package identityservice.configuration;
+package com.echoverse.profile.configuration;
 
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.security.oauth2.jwt.Jwt;
