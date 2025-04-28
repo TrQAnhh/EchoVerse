@@ -31,9 +31,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<UserResponseDto> getUser(@PathVariable String userId) {
+    ApiResponse<UserResponseDto> getUser(@PathVariable Long userId) {
         return ApiResponse.<UserResponseDto>builder().
-                result(userService.getUser(id))
+                result(userService.getUser(userId))
         .build();
     }
 
