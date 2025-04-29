@@ -42,8 +42,12 @@ public class UserProfileController {
     }
 
     @DeleteMapping("/user/{id}")
-    UserProfileResponse deleteProfile(@PathVariable long id) {
-        return userProfileService.deleteProfile(id);
+    ApiResponse<Void> deleteProfile(@PathVariable long id) {
+        userProfileService.deleteProfile(id);
+        return ApiResponse.<Void>builder()
+                .code(200)
+                .message("Delete profile with profile's id: " + id + " successfully")
+                .build();
     }
 
 }
