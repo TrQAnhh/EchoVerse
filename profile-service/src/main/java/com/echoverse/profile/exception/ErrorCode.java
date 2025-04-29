@@ -15,6 +15,7 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, "User not found", HttpStatus.NOT_FOUND),
     PERMISSION_NOT_FOUND(404, "Permission not found", HttpStatus.NOT_FOUND),
     ROLE_NOT_FOUND(404, "Role not found", HttpStatus.NOT_FOUND),
+    PROFILE_NOT_FOUND(404, "Profile not found", HttpStatus.NOT_FOUND),
     FAIL_TO_GENERATE_TOKEN(406, "Fail to generate token", HttpStatus.NOT_ACCEPTABLE),
     INVALID_JWT_TOKEN(407, "Invalid JWT token", HttpStatus.PROXY_AUTHENTICATION_REQUIRED),
     USER_EXISTED(409, "User already exists", HttpStatus.CONFLICT),
