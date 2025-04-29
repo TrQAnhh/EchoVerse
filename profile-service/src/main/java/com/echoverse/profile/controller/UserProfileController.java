@@ -1,6 +1,7 @@
 package com.echoverse.profile.controller;
 
 import com.echoverse.profile.dto.request.ProfileCreationRequest;
+import com.echoverse.profile.dto.response.ApiResponse;
 import com.echoverse.profile.dto.response.UserProfileResponse;
 import com.echoverse.profile.service.UserProfileService;
 import lombok.AccessLevel;
@@ -17,23 +18,27 @@ public class UserProfileController {
     UserProfileService userProfileService;
 
     @PostMapping("/user")
-    UserProfileResponse createProfile(@RequestBody ProfileCreationRequest request) {
-        return userProfileService.createProfile(request);
+    ApiResponse<UserProfileResponse> createProfile(@RequestBody ProfileCreationRequest request) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.createProfile(request)).build();
     }
 
     @GetMapping
-    List<UserProfileResponse> getAllProfiles() {
-        return userProfileService.getAllProfiles();
+    ApiResponse<List<UserProfileResponse>> getAllProfiles() {
+        return ApiResponse.<List<UserProfileResponse>>builder()
+                .result(userProfileService.getAllProfiles()).build();
     }
 
     @GetMapping("/user/{id}")
-    UserProfileResponse getProfile(@PathVariable long id) {
-        return userProfileService.getProfile(id);
+    ApiResponse<UserProfileResponse> getProfile(@PathVariable long id) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getProfile(id)).build();
     }
 
     @PutMapping("/user/{id}")
-    UserProfileResponse editProfile(@PathVariable long id, @RequestBody ProfileCreationRequest request) {
-        return userProfileService.editProfile(id, request);
+    ApiResponse<UserProfileResponse> editProfile(@PathVariable long id, @RequestBody ProfileCreationRequest request) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.editProfile(id, request)).build();
     }
 
     @DeleteMapping("/user/{id}")
