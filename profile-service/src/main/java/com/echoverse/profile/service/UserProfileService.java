@@ -3,6 +3,8 @@ package com.echoverse.profile.service;
 import com.echoverse.profile.dto.request.ProfileCreationRequest;
 import com.echoverse.profile.dto.response.UserProfileResponse;
 import com.echoverse.profile.entity.UserProfile;
+import com.echoverse.profile.exception.AppException;
+import com.echoverse.profile.exception.ErrorCode;
 import com.echoverse.profile.mapper.UserProfileMapper;
 import com.echoverse.profile.repository.UserProfileRepository;
 import lombok.AccessLevel;
@@ -57,12 +59,12 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    public UserProfileResponse deleteProfile(long profileId) {
+    public void deleteProfile(long profileId) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
-                () -> new RuntimeException("Profile not found"));
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
-        userProfileRepository.deleteById(profileId);
-        return userProfileMapper.toUserProfileResponse(userProfile);
+        userProfile.setDeleted(true);
+        userProfileRepository.save(userProfile);
     }
 }
 
