@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,14 +50,14 @@ public class UserProfileService {
 
     public UserProfileResponse getProfile(long profileId) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
-                () -> new RuntimeException("Profile not found"));
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
     public UserProfileResponse editProfile(long profileId, ProfileCreationRequest request) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
-                () -> new RuntimeException("Profile not found"));
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         userProfileMapper.profileUpdate(userProfile, request);
         userProfile = userProfileRepository.save(userProfile);
@@ -64,8 +66,15 @@ public class UserProfileService {
     }
 
     public ImageFileResponse editUserAvatar(long profileId, MultipartFile file) throws IOException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = auth.getName();
+
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
-                () -> new RuntimeException("Profile not found"));
+                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+
+        if (!String.valueOf(userProfile.getUserId()).equals(currentUserId)) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
 
         var fileUpload = uploadImageService.uploadImage(file);
 

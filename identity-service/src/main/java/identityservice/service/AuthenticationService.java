@@ -81,7 +81,7 @@ public class AuthenticationService {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getUsername())
+                .subject(String.valueOf(user.getId()))
                 .issuer("echoverse.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(Long.parseLong(VALID_DURATION), ChronoUnit.SECONDS).toEpochMilli()))
