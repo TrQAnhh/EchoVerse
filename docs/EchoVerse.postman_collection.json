@@ -111,6 +111,90 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update user avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/avatar/10",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"avatar",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user cover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Quốc Anh/_DSC7786.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/cover/10",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"cover",
+								"10"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1671,7 +1755,7 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "postman-cloud:///1f0296ca-4550-4f10-be72-990407dbfb31"
+											"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
 										}
 									]
 								},
@@ -1687,6 +1771,49 @@
 										"profile",
 										"user",
 										"avatar",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user cover",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/D:/Quốc Anh/_DSC7786.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/cover/10",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"cover",
 										"10"
 									]
 								}
