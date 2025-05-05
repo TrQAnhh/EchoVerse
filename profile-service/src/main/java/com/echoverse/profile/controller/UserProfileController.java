@@ -52,6 +52,14 @@ public class UserProfileController {
                 .build();
     }
 
+    @PutMapping("/user/cover/{id}")
+    ApiResponse<ImageFileResponse> editUserCover(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+        return ApiResponse.<ImageFileResponse>builder()
+                .code(200)
+                .result(userProfileService.editUserCover(id,file))
+                .build();
+    }
+
     @DeleteMapping("/user/{id}")
     ApiResponse<Void> deleteProfile(@PathVariable long id) {
         userProfileService.deleteProfile(id);

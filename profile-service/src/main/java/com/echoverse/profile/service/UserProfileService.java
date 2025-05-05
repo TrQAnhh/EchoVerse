@@ -13,13 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @Service
 @RequiredArgsConstructor
@@ -66,26 +65,32 @@ public class UserProfileService {
     }
 
     public ImageFileResponse editUserAvatar(long profileId, MultipartFile file) throws IOException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserId = auth.getName();
+        return updateProfileImage(profileId, file, UserProfile::setAvatar);
+    }
 
-        UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
-                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+    public ImageFileResponse editUserCover(long profileId, MultipartFile file) throws IOException {
+        return updateProfileImage(profileId, file, UserProfile::setCoverImage);
+    }
 
-        if (!String.valueOf(userProfile.getUserId()).equals(currentUserId)) {
+    private ImageFileResponse updateProfileImage(
+            long profileId,
+            MultipartFile file,
+            BiConsumer<UserProfile, String> setter
+    ) throws IOException {
+        String currentUserId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        UserProfile profile = userProfileRepository.findById(profileId)
+                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+        if (!String.valueOf(profile.getUserId()).equals(currentUserId)) {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
-
-        var fileUpload = uploadImageService.uploadImage(file);
-
-        userProfile.setAvatar(fileUpload.getUrl());
-        userProfile = userProfileRepository.save(userProfile);
-
-        return ImageFileResponse.builder()
-                .url(fileUpload.getUrl())
-                .originalFileName(fileUpload.getOriginalFileName())
-                .build();
+        ImageFileResponse img = uploadImageService.uploadImage(file);
+        setter.accept(profile, img.getUrl());
+        userProfileRepository.save(profile);
+        return img;
     }
+
 
     public void deleteProfile(long profileId) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
