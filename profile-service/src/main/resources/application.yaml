@@ -5,11 +5,8 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:5432/postgres?user=postgres.nhlstgbklzxwzoxdvdnr&password=7QP7w9mU8SADZu46
+    url: jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?user=postgres.ojtjepkbgyuysupjepnf&password=RICLb0k9PbkYXPbH
     driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 15
-      minimum-idle: 10
   application:
     name: profile-service
   servlet:
