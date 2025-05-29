@@ -1,6 +1,7 @@
-package com.echoverse.profile.exception;
+package com.echoverse.video_service.exception;
 
-import com.echoverse.profile.dto.response.ApiResponseDto;
+
+import com.echoverse.video_service.dto.response.ApiResponseDto;
 import jakarta.validation.ConstraintViolation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

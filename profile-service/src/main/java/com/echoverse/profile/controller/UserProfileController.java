@@ -1,9 +1,9 @@
 package com.echoverse.profile.controller;
 
-import com.echoverse.profile.dto.request.ProfileCreationRequest;
-import com.echoverse.profile.dto.response.ApiResponse;
-import com.echoverse.profile.dto.response.ImageFileResponse;
-import com.echoverse.profile.dto.response.UserProfileResponse;
+import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.response.ApiResponseDto;
+import com.echoverse.profile.dto.response.ImageFileResponseDto;
+import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,49 +21,49 @@ public class UserProfileController {
     UserProfileService userProfileService;
 
     @PostMapping("/user")
-    ApiResponse<UserProfileResponse> createProfile(@RequestBody ProfileCreationRequest request) {
-        return ApiResponse.<UserProfileResponse>builder()
+    ApiResponseDto<UserProfileResponseDto> createProfile(@RequestBody ProfileCreationRequestDto request) {
+        return ApiResponseDto.<UserProfileResponseDto>builder()
                 .result(userProfileService.createProfile(request)).build();
     }
 
     @GetMapping
-    ApiResponse<List<UserProfileResponse>> getAllProfiles() {
-        return ApiResponse.<List<UserProfileResponse>>builder()
+    ApiResponseDto<List<UserProfileResponseDto>> getAllProfiles() {
+        return ApiResponseDto.<List<UserProfileResponseDto>>builder()
                 .result(userProfileService.getAllProfiles()).build();
     }
 
     @GetMapping("/user/{id}")
-    ApiResponse<UserProfileResponse> getProfile(@PathVariable long id) {
-        return ApiResponse.<UserProfileResponse>builder()
+    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long id) {
+        return ApiResponseDto.<UserProfileResponseDto>builder()
                 .result(userProfileService.getProfile(id)).build();
     }
 
     @PutMapping("/user/{id}")
-    ApiResponse<UserProfileResponse> editProfile(@PathVariable long id, @RequestBody ProfileCreationRequest request) {
-        return ApiResponse.<UserProfileResponse>builder()
+    ApiResponseDto<UserProfileResponseDto> editProfile(@PathVariable long id, @RequestBody ProfileCreationRequestDto request) {
+        return ApiResponseDto.<UserProfileResponseDto>builder()
                 .result(userProfileService.editProfile(id, request)).build();
     }
 
     @PutMapping("/user/avatar/{id}")
-    ApiResponse<ImageFileResponse> editUserAvatar(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
-        return ApiResponse.<ImageFileResponse>builder()
+    ApiResponseDto<ImageFileResponseDto> editUserAvatar(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+        return ApiResponseDto.<ImageFileResponseDto>builder()
                 .code(200)
                 .result(userProfileService.editUserAvatar(id,file))
                 .build();
     }
 
     @PutMapping("/user/cover/{id}")
-    ApiResponse<ImageFileResponse> editUserCover(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
-        return ApiResponse.<ImageFileResponse>builder()
+    ApiResponseDto<ImageFileResponseDto> editUserCover(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+        return ApiResponseDto.<ImageFileResponseDto>builder()
                 .code(200)
                 .result(userProfileService.editUserCover(id,file))
                 .build();
     }
 
     @DeleteMapping("/user/{id}")
-    ApiResponse<Void> deleteProfile(@PathVariable long id) {
+    ApiResponseDto<Void> deleteProfile(@PathVariable long id) {
         userProfileService.deleteProfile(id);
-        return ApiResponse.<Void>builder()
+        return ApiResponseDto.<Void>builder()
                 .code(200)
                 .message("Delete profile with profile's id: " + id + " successfully")
                 .build();

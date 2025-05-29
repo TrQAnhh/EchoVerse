@@ -1,14 +1,13 @@
 package com.echoverse.profile.controller;
 
-import com.echoverse.profile.dto.request.ProfileCreationRequest;
-import com.echoverse.profile.dto.response.UserProfileResponse;
+import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.response.ApiResponseDto;
+import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +16,14 @@ public class InternalUserProfileController {
     UserProfileService userProfileService;
 
     @PostMapping("/internal/user")
-    UserProfileResponse createProfile(@RequestBody ProfileCreationRequest request) {
+    UserProfileResponseDto createProfile(@RequestBody ProfileCreationRequestDto request) {
         return userProfileService.createProfile(request);
+    }
+
+    @GetMapping("/internal/user/{id}")
+    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long id) {
+        return ApiResponseDto.<UserProfileResponseDto>builder()
+                .result(userProfileService.getProfile(id)).build();
     }
 
 }

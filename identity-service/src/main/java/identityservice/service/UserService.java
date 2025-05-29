@@ -75,12 +75,12 @@ public class UserService {
             return userMapper.toUserResponse(user);
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+    @PostAuthorize("returnObject.id.toString() == authentication.name")
     public UserResponseDto getMyInfo() {
         var context = SecurityContextHolder.getContext();
-        String username = context.getAuthentication().getName();
+        long userId = Long.parseLong(context.getAuthentication().getName());
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
 
         return userMapper.toUserResponse(user);
     }

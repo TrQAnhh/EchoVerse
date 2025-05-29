@@ -1,7 +1,7 @@
 package identityservice.controller;
 
 import identityservice.dto.request.UserUpdateRequestDto;
-import identityservice.dto.response.ApiResponse;
+import identityservice.dto.response.ApiResponseDto;
 import identityservice.dto.response.UserResponseDto;
 import identityservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,33 +21,33 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    ApiResponse<List<UserResponseDto>> getUsers() {
-        return ApiResponse.<List<UserResponseDto>>builder()
+    ApiResponseDto<List<UserResponseDto>> getUsers() {
+        return ApiResponseDto.<List<UserResponseDto>>builder()
                 .result(userService.getUsers())
                 .build();
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<UserResponseDto> getUser(@PathVariable Long userId) {
-        return ApiResponse.<UserResponseDto>builder().
+    ApiResponseDto<UserResponseDto> getUser(@PathVariable Long userId) {
+        return ApiResponseDto.<UserResponseDto>builder().
                 result(userService.getUser(userId))
         .build();
     }
 
     @GetMapping("/personal")
-    ApiResponse<UserResponseDto> userInformation() {
-        return ApiResponse.<UserResponseDto>builder().result(userService.getMyInfo()).build();
+    ApiResponseDto<UserResponseDto> userInformation() {
+        return ApiResponseDto.<UserResponseDto>builder().result(userService.getMyInfo()).build();
     }
 
 
     @PutMapping("/{userId}")
-    ApiResponse<UserResponseDto> updateUser(@RequestBody UserUpdateRequestDto userDto, @PathVariable Long userId) {
-        return ApiResponse.<UserResponseDto>builder().result(userService.updateUser(userId, userDto)).build();
+    ApiResponseDto<UserResponseDto> updateUser(@RequestBody UserUpdateRequestDto userDto, @PathVariable Long userId) {
+        return ApiResponseDto.<UserResponseDto>builder().result(userService.updateUser(userId, userDto)).build();
     }
 
     @DeleteMapping("/{userId}")
-    ApiResponse<Void> deleteUser(@PathVariable Long userId) {
-        return ApiResponse.<Void>builder()
+    ApiResponseDto<Void> deleteUser(@PathVariable Long userId) {
+        return ApiResponseDto.<Void>builder()
                 .code(200)
                 .message("Delete user with user's id: " + userId + " successfully")
                 .build();

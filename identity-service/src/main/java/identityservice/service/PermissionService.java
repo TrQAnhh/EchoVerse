@@ -1,7 +1,6 @@
 package identityservice.service;
 
 import identityservice.dto.request.PermissionRequestDto;
-import identityservice.dto.response.ApiResponse;
 import identityservice.dto.response.PermissionResponseDto;
 import identityservice.entity.Permission;
 import identityservice.exception.AppException;
@@ -11,7 +10,6 @@ import identityservice.repository.PermissionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

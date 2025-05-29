@@ -1,8 +1,8 @@
 package com.echoverse.profile.service;
 
-import com.echoverse.profile.dto.request.ProfileCreationRequest;
-import com.echoverse.profile.dto.response.ImageFileResponse;
-import com.echoverse.profile.dto.response.UserProfileResponse;
+import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.response.ImageFileResponseDto;
+import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
 import com.echoverse.profile.exception.AppException;
 import com.echoverse.profile.exception.ErrorCode;
@@ -29,7 +29,7 @@ public class UserProfileService {
     UserProfileMapper userProfileMapper;
     UploadImageService uploadImageService;
 
-    public UserProfileResponse createProfile(ProfileCreationRequest request) {
+    public UserProfileResponseDto createProfile(ProfileCreationRequestDto request) {
         System.out.println("Received request: " + request);
 
         UserProfile userProfile = userProfileMapper.toUserProfile(request);
@@ -42,19 +42,19 @@ public class UserProfileService {
 
 
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserProfileResponse> getAllProfiles() {
-        List<UserProfileResponse> userProfiles = userProfileRepository.findAll().stream().map(userProfileMapper::toUserProfileResponse).toList();
+    public List<UserProfileResponseDto> getAllProfiles() {
+        List<UserProfileResponseDto> userProfiles = userProfileRepository.findAll().stream().map(userProfileMapper::toUserProfileResponse).toList();
         return userProfiles;
     }
 
-    public UserProfileResponse getProfile(long profileId) {
+    public UserProfileResponseDto getProfile(long profileId) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    public UserProfileResponse editProfile(long profileId, ProfileCreationRequest request) {
+    public UserProfileResponseDto editProfile(long profileId, ProfileCreationRequestDto request) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
@@ -64,15 +64,15 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    public ImageFileResponse editUserAvatar(long profileId, MultipartFile file) throws IOException {
+    public ImageFileResponseDto editUserAvatar(long profileId, MultipartFile file) throws IOException {
         return updateProfileImage(profileId, file, UserProfile::setAvatar);
     }
 
-    public ImageFileResponse editUserCover(long profileId, MultipartFile file) throws IOException {
+    public ImageFileResponseDto editUserCover(long profileId, MultipartFile file) throws IOException {
         return updateProfileImage(profileId, file, UserProfile::setCoverImage);
     }
 
-    private ImageFileResponse updateProfileImage(
+    private ImageFileResponseDto updateProfileImage(
             long profileId,
             MultipartFile file,
             BiConsumer<UserProfile, String> setter
@@ -85,7 +85,7 @@ public class UserProfileService {
         if (!String.valueOf(profile.getUserId()).equals(currentUserId)) {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
-        ImageFileResponse img = uploadImageService.uploadImage(file);
+        ImageFileResponseDto img = uploadImageService.uploadImage(file);
         setter.accept(profile, img.getUrl());
         userProfileRepository.save(profile);
         return img;

@@ -2,11 +2,9 @@ package identityservice.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileResponse {
+public class UserProfileResponseDto {
     long id;
     String firstName;
     String middleName;

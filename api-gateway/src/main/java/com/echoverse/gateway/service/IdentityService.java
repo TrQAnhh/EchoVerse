@@ -1,8 +1,8 @@
 package com.echoverse.gateway.service;
 
-import com.echoverse.gateway.dto.request.IntrospectRequest;
-import com.echoverse.gateway.dto.response.ApiResponse;
-import com.echoverse.gateway.dto.response.IntrospectResponse;
+import com.echoverse.gateway.dto.request.IntrospectRequestDto;
+import com.echoverse.gateway.dto.response.ApiResponseDto;
+import com.echoverse.gateway.dto.response.IntrospectResponseDto;
 import com.echoverse.gateway.repository.IdentityClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ import reactor.core.publisher.Mono;
 public class IdentityService {
     IdentityClient identityClient;
 
-    public Mono<ApiResponse<IntrospectResponse>> introspect(String token) {
-        return identityClient.introspect(IntrospectRequest
+    public Mono<ApiResponseDto<IntrospectResponseDto>> introspect(String token) {
+        return identityClient.introspect(IntrospectRequestDto
                 .builder().token(token)
                 .build());
     }

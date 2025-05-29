@@ -1,12 +1,12 @@
-package com.echoverse.profile.service;
+package com.echoverse.video_service.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.echoverse.profile.dto.response.ImageFileResponseDto;
+import com.echoverse.video_service.dto.response.FileResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,11 +19,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UploadImageService {
+public class UploadVideoService {
 
     private final Cloudinary cloudinary;
 
-    public ImageFileResponseDto uploadImage(MultipartFile file) throws IOException {
+    public FileResponseDto uploadFile(MultipartFile file) throws IOException {
         assert file.getOriginalFilename() != null;
         String publicValue = generatePublicValue(file.getOriginalFilename());
         String extension   = getFileName(file.getOriginalFilename())[1];
@@ -34,7 +34,7 @@ public class UploadImageService {
 
         var url = cloudinary.url().generate(StringUtils.join(publicValue, ".", extension));
 
-        return ImageFileResponseDto.builder()
+        return FileResponseDto.builder()
                 .originalFileName(publicValue)
                 .url(url)
                 .build();

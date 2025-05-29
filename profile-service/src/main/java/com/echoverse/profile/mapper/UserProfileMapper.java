@@ -1,7 +1,7 @@
 package com.echoverse.profile.mapper;
 
-import com.echoverse.profile.dto.request.ProfileCreationRequest;
-import com.echoverse.profile.dto.response.UserProfileResponse;
+import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -25,10 +25,10 @@ public interface UserProfileMapper {
     @Mapping(target = "avatar", ignore = true)
     @Mapping(target = "createdt", ignore = true)
     @Mapping(target = "updatedt", ignore = true)
-    UserProfile toUserProfile(ProfileCreationRequest request);
+    UserProfile toUserProfile(ProfileCreationRequestDto request);
 
 
-    UserProfileResponse toUserProfileResponse(UserProfile userProfile);
+    UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
-    void profileUpdate(@MappingTarget UserProfile profile, ProfileCreationRequest request);
+    void profileUpdate(@MappingTarget UserProfile profile, ProfileCreationRequestDto request);
 }

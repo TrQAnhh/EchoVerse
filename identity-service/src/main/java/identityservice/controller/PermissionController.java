@@ -1,7 +1,7 @@
 package identityservice.controller;
 
 import identityservice.dto.request.PermissionRequestDto;
-import identityservice.dto.response.ApiResponse;
+import identityservice.dto.response.ApiResponseDto;
 import identityservice.dto.response.PermissionResponseDto;
 import identityservice.service.PermissionService;
 import lombok.RequiredArgsConstructor;
@@ -20,21 +20,21 @@ public class PermissionController {
     PermissionService permissionService;
 
     @GetMapping()
-    ApiResponse<List<PermissionResponseDto>> getAllPermissions() {
-        return ApiResponse.<List<PermissionResponseDto>>builder()
+    ApiResponseDto<List<PermissionResponseDto>> getAllPermissions() {
+        return ApiResponseDto.<List<PermissionResponseDto>>builder()
                 .result(permissionService.getAllPermissions())
                 .build();
     }
 
     @PostMapping()
-    public ApiResponse<PermissionResponseDto> createPermission(@RequestBody PermissionRequestDto permissionRequestDto) {
-        return ApiResponse.<PermissionResponseDto>builder()
+    public ApiResponseDto<PermissionResponseDto> createPermission(@RequestBody PermissionRequestDto permissionRequestDto) {
+        return ApiResponseDto.<PermissionResponseDto>builder()
                 .result(permissionService.createPermission(permissionRequestDto))
                 .build();    }
 
     @PutMapping("/{permissionId}")
-    public ApiResponse<PermissionResponseDto> updatePermission(@RequestBody PermissionRequestDto permissionRequestDto, @PathVariable String permissionId) {
-        return ApiResponse.<PermissionResponseDto>builder()
+    public ApiResponseDto<PermissionResponseDto> updatePermission(@RequestBody PermissionRequestDto permissionRequestDto, @PathVariable String permissionId) {
+        return ApiResponseDto.<PermissionResponseDto>builder()
                 .result(permissionService.updatePermission(permissionId,permissionRequestDto))
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.echoverse.gateway.configuration;
 
-import com.echoverse.gateway.dto.response.ApiResponse;
+import com.echoverse.gateway.dto.response.ApiResponseDto;
 import com.echoverse.gateway.service.IdentityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,14 +80,14 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
-        ApiResponse<?> apiResponse = ApiResponse.builder()
-                .code(1401)
+        ApiResponseDto<?> apiResponseDto = ApiResponseDto.builder()
+                .code(403)
                 .message("Unauthenticated")
                 .build();
 
         String body = null;
         try {
-            body = objectMapper.writeValueAsString(apiResponse);
+            body = objectMapper.writeValueAsString(apiResponseDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

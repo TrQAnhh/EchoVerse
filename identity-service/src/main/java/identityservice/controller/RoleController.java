@@ -1,7 +1,7 @@
 package identityservice.controller;
 
 import identityservice.dto.request.RoleRequestDto;
-import identityservice.dto.response.ApiResponse;
+import identityservice.dto.response.ApiResponseDto;
 import identityservice.dto.response.RoleResponseDto;
 import identityservice.service.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +20,22 @@ public class RoleController {
     RoleService roleService;
 
     @PostMapping("")
-    ApiResponse<RoleResponseDto> createRole(@RequestBody RoleRequestDto roleDto) {
-        return ApiResponse.<RoleResponseDto>builder()
+    ApiResponseDto<RoleResponseDto> createRole(@RequestBody RoleRequestDto roleDto) {
+        return ApiResponseDto.<RoleResponseDto>builder()
                 .result(roleService.createRole(roleDto))
                 .build();
     }
 
     @PutMapping("/{roleId}")
-    ApiResponse<Object> updateRole(@PathVariable String roleId, @RequestBody RoleRequestDto roleDto) {
-        return ApiResponse.builder()
+    ApiResponseDto<Object> updateRole(@PathVariable String roleId, @RequestBody RoleRequestDto roleDto) {
+        return ApiResponseDto.builder()
                 .result(roleService.updateRole(roleId,roleDto))
                 .build();
     }
 
     @GetMapping("")
-    ApiResponse<List<RoleResponseDto>> getAllRoles() {
-        return ApiResponse.<List<RoleResponseDto>>builder()
+    ApiResponseDto<List<RoleResponseDto>> getAllRoles() {
+        return ApiResponseDto.<List<RoleResponseDto>>builder()
                 .result(roleService.getAllRoles())
                 .build();
     }

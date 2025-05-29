@@ -1,9 +1,8 @@
-package com.echoverse.profile.configuration;
+package com.echoverse.video_service.configuration;
 
-import com.echoverse.profile.dto.response.ApiResponseDto;
-import com.echoverse.profile.exception.ErrorCode;
+import com.echoverse.video_service.exception.ErrorCode;
+import com.echoverse.video_service.dto.response.ApiResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
