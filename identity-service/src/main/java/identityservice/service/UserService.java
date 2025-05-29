@@ -81,8 +81,12 @@ public class UserService {
         long userId = Long.parseLong(context.getAuthentication().getName());
 
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
+        var userProfile = profileClient.getProfileByUserId(userId);
 
-        return userMapper.toUserResponse(user);
+        return userMapper.toUserResponse(user)
+                .toBuilder()
+                .profile(userProfile.getResult())
+                .build();
     }
 
     @PostAuthorize("returnObject.username == authentication.name")

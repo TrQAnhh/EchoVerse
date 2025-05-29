@@ -29,6 +29,7 @@ public class SecurityConfig {
 
     final String[] PUBLIC_ENDPOINTS = {
             "/internal/user",
+            "/internal/user/{userId}",
     };
 
 

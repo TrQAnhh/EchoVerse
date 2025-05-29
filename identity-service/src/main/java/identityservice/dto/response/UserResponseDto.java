@@ -6,12 +6,13 @@ import lombok.experimental.FieldDefaults;
 import java.util.Set;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponseDto {
     long id;
     String username;
+    UserProfileResponseDto profile;
     Set<RoleResponseDto> roles;
 }

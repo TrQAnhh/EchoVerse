@@ -20,10 +20,10 @@ public class InternalUserProfileController {
         return userProfileService.createProfile(request);
     }
 
-    @GetMapping("/internal/user/{id}")
-    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long id) {
+    @GetMapping("/internal/user/{userId}")
+    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long userId) {
         return ApiResponseDto.<UserProfileResponseDto>builder()
-                .result(userProfileService.getProfile(id)).build();
+                .result(userProfileService.getProfile(userId)).build();
     }
 
 }

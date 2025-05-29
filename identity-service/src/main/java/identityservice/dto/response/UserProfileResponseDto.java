@@ -26,6 +26,4 @@ public class UserProfileResponseDto {
     String bio;
     String coverImage;
     String avatar;
-    Date createdt;
-    Date updatedt;
 }

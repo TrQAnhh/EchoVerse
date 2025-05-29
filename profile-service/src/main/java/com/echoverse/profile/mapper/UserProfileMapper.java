@@ -29,6 +29,8 @@ public interface UserProfileMapper {
     UserProfile toUserProfile(ProfileCreationRequestDto request);
 
     @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "avatar", target = "avatar")
+    @Mapping(source = "coverImage", target = "coverImage")
     UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
     void updateUserProfile(@MappingTarget UserProfile profile, ProfileUpdateRequestDto request);
