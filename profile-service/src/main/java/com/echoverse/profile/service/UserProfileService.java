@@ -49,7 +49,7 @@ public class UserProfileService {
         return userProfiles;
     }
 
-    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public UserProfileResponseDto getProfile(long userId) {
         UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
@@ -57,7 +57,7 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public UserProfileResponseDto editProfile(long userId, ProfileUpdateRequestDto request) {
         UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
@@ -68,12 +68,12 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public ImageFileResponseDto editUserAvatar(long userId, MultipartFile file) throws IOException {
         return updateProfileImage(userId, file, UserProfile::setAvatar);
     }
 
-    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public ImageFileResponseDto editUserCover(long userId, MultipartFile file) throws IOException {
         return updateProfileImage(userId, file, UserProfile::setCoverImage);
     }
