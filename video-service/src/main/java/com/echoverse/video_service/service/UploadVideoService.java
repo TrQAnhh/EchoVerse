@@ -6,6 +6,9 @@ import com.echoverse.video_service.dto.response.FileResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jcodec.api.FrameGrab;
+import org.jcodec.common.io.FileChannelWrapper;
+import org.jcodec.common.io.NIOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,14 +28,22 @@ public class UploadVideoService {
 
     public FileResponseDto uploadFile(MultipartFile file) throws IOException {
         assert file.getOriginalFilename() != null;
-        String publicValue = generatePublicValue(file.getOriginalFilename());
-        String extension   = getFileName(file.getOriginalFilename())[1];
-        File fileUpload = convert(file);
+        String originalFileName = file.getOriginalFilename();
+        String publicValue = generatePublicValue(originalFileName);
+        String extension = getFileExtension(originalFileName);
+        File fileUpload = convert(file, publicValue, extension);
 
-        cloudinary.uploader().upload(fileUpload, ObjectUtils.asMap("public_id",publicValue));
+        String resourceType = determineResourceType(extension);
+
+        cloudinary.uploader().upload(fileUpload, ObjectUtils.asMap(
+                "public_id", publicValue,
+                "resource_type", resourceType
+        ));
         cleanDisk(fileUpload);
 
-        var url = cloudinary.url().generate(StringUtils.join(publicValue, ".", extension));
+        String url = cloudinary.url()
+                .resourceType(resourceType)
+                .generate(publicValue + "." + extension);
 
         return FileResponseDto.builder()
                 .originalFileName(publicValue)
@@ -49,12 +60,32 @@ public class UploadVideoService {
         return originalName.split("\\.");
     }
 
-    private File convert(MultipartFile file) throws IOException {
-        assert file.getOriginalFilename() != null;
-        File convFile = new File(StringUtils.join(
-                generatePublicValue(file.getOriginalFilename()),
-                getFileName(file.getOriginalFilename())[1]
-        ));
+    private String determineResourceType(String extension) {
+        switch (extension) {
+            case "mp4":
+            case "mov":
+            case "avi":
+            case "mkv":
+                return "video";
+            case "jpg":
+            case "jpeg":
+            case "png":
+            case "gif":
+            case "bmp":
+                return "image";
+            default:
+                return "auto";
+        }
+    }
+
+    private String getFileExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex == -1) return "";
+        return filename.substring(dotIndex + 1).toLowerCase();
+    }
+
+    private File convert(MultipartFile file, String publicValue, String extension) throws IOException {
+        File convFile = new File(publicValue + "." + extension);
         try (InputStream is = file.getInputStream()) {
             Files.copy(is, convFile.toPath());
         }
@@ -70,4 +101,25 @@ public class UploadVideoService {
         }
     }
 
+    public static long getDuration(MultipartFile multipartFile) throws IOException {
+        String originalFilename = multipartFile.getOriginalFilename();
+        String suffix = "";
+
+        if (originalFilename != null && originalFilename.contains(".")) {
+            suffix = originalFilename.substring(originalFilename.lastIndexOf('.'));
+        }
+
+        File tempFile = File.createTempFile("temp-video-", suffix);
+        multipartFile.transferTo(tempFile);
+
+        try (FileChannelWrapper ch = NIOUtils.readableChannel(tempFile)) {
+            FrameGrab grab = FrameGrab.createFrameGrab(ch);
+            double durationDouble = grab.getVideoTrack().getMeta().getTotalDuration();
+            return Math.round(durationDouble);
+        } catch (Exception e) {
+            throw new IOException("Fail to get video duration", e);
+        } finally {
+            tempFile.delete();
+        }
+    }
 }

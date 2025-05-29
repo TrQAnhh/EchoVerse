@@ -258,7 +258,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"TrQAnhh\",\r\n    \"password\": \"Tranquocanh@123\"\r\n}",
+									"raw": "{\r\n    \"username\": \"tqanh\",\r\n    \"password\": \"Tranquocanh@123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -896,6 +896,18 @@
 			"item": [
 				{
 					"name": "upload new video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -915,29 +927,26 @@
 								{
 									"key": "videoFile",
 									"type": "file",
-									"src": [
-										"/D:/Mixi Funny Moment 27： Tổng hợp những tình huống vui vui trên stream của Độ Mixi..mp4",
-										"/D:/1409899-uhd_3840_2160_25fps.mp4"
-									]
+									"src": "/D:/daily vlog in vietnam.mp4"
 								},
 								{
 									"key": "thumbnailFile",
 									"type": "file",
-									"src": "/D:/OIP.jpg"
+									"src": "postman-cloud:///1f03c793-3281-46a0-b892-103ff26c08dc"
 								},
 								{
 									"key": "title",
-									"value": "Mixi funny moments",
+									"value": "My daily vlog in Vietnam",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "Chào mừng tới kênh của tui!",
+									"value": "Welcome to my channel!",
 									"type": "text"
 								},
 								{
 									"key": "userId",
-									"value": "43",
+									"value": "42",
 									"type": "text"
 								},
 								{
@@ -970,7 +979,7 @@
 					"response": []
 				},
 				{
-					"name": "update video",
+					"name": "update video by video id",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -984,6 +993,66 @@
 							"path": [
 								"video",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all by user's id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/42",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a video by video id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/10",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"10"
 							]
 						}
 					},
@@ -1938,6 +2007,197 @@
 										"user",
 										"cover",
 										"42"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Video",
+					"item": [
+						{
+							"name": "upload new video",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "videoFile",
+											"type": "file",
+											"src": "/D:/vung tau vlog.mp4"
+										},
+										{
+											"key": "thumbnailFile",
+											"type": "file",
+											"src": "/D:/vung tau vlog.jpg"
+										},
+										{
+											"key": "title",
+											"value": "Livestream review chuyến đi Vũng Tàu 2025",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Welcome to my channel!",
+											"type": "text"
+										},
+										{
+											"key": "userId",
+											"value": "42",
+											"type": "text"
+										},
+										{
+											"key": "isLive",
+											"value": "false",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/video/upload",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"video",
+										"upload"
+									],
+									"query": [
+										{
+											"key": "videoFile",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all video by user's id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/video/42",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"video",
+										"42"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update video by video id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Livestream review chuyến đi Việt Nam 2025\",\r\n    \"description\": \"Welcome to my channel!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/8",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_VIDEO}}",
+									"path": [
+										"video",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete a video by video id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/video/10",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"video",
+										"10"
 									]
 								}
 							},
