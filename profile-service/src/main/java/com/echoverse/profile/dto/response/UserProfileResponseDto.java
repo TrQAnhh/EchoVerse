@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +23,8 @@ public class UserProfileResponseDto {
     String address;
     String bio;
     String chanelName;
+
+    String avatar;
+    String coverImage;
+    Set<String> subscribers;
 }
