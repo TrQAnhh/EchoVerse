@@ -1,0 +1,1951 @@
+{
+	"info": {
+		"_postman_id": "ed149014-6b65-4560-bf22-616999e28f20",
+		"name": "EchoVerse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37751783",
+		"_collection_link": "https://bigteam-7748.postman.co/workspace/EchoVerse~b4a74060-7bca-47a3-9756-8aaa9fa39daa/collection/37751783-ed149014-6b65-4560-bf22-616999e28f20?action=share&source=collection_link&creator=37751783"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Create user's profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 26,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/internal/user",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"internal",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a profile by user's id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/42",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a profile by user's id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanhl@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/42",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a profile by user's id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/41",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"41"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/avatar/42",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"avatar",
+								"42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user cover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/cover/42",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_PROFILE}}",
+							"path": [
+								"profile",
+								"user",
+								"cover",
+								"42"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"let token = response.result.token;\r",
+											"pm.environment.set(\"AUTH_TOKEN\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"TrQAnhh\",\r\n    \"password\": \"Tranquocanh@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/login",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiVHJRQW5oaCIsImV4cCI6MTc0NDgxNzAyMywiaWF0IjoxNzQ0ODEzNDIzLCJqdGkiOiJhZGE2ZmE5Ni1lZmFlLTQ2ZGMtOWMzZi03N2FlZjVmNjk4OWIiLCJzY29wZSI6IiJ9.mEVBUkH8Hs8XWwEdbjAnmoyFR6-RCsPPa0OQJAlg2MgVgCWET-uXsaSrZAaRhKNR4IT5GGXJf6rZ_xWRleH5Pg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/logout",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Introspect",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiVHJRQW5oaCIsImV4cCI6MTc0NDgxNzI1NiwiaWF0IjoxNzQ0ODEzNjU2LCJqdGkiOiJjZTU5MjY5OS0xNmFiLTRjNjktYWU1Ni1lN2EyMjk3M2ZjYzEiLCJzY29wZSI6IiJ9.APOrEEh4ee1t1AsgnRI2ExMiJCsj5p8cZk-kKsSGlF24RLfm0bMpBh90LpkNuoannc4Oxlxqj-HWvN0rHX6uNw\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/introspect",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"introspect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"DNChuong\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"chuongdo172@gmail.com\",\r\n    \"firstName\": \"Chuong\",\r\n    \"lastName\": \"Do\",\r\n    \"middleName\": \"Nguyen\",\r\n    \"phoneNumber\": \"0123456789\",\r\n    \"dob\": \"2004-12-17\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/register",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"let token = response.result.token;\r",
+											"pm.environment.set(\"AUTH_TOKEN\", token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiVHJRQW5oaCIsImV4cCI6MTc0NDgxNzIyOCwiaWF0IjoxNzQ0ODEzNjI4LCJqdGkiOiJiOTkyMzI0Ni03MTNlLTRiNzEtOWI5My0xMWViZDMwZDUyMmEiLCJzY29wZSI6IiJ9.YPFRg5-DIMOD9tMMVv8IC2Wcq_5u-pznbzW0ntJ5lkqTMRissj_K9G0WKKr6L8I2qWgek29v7oShclQsIiGoEw\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/auth/refresh-token",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Permission",
+					"item": [
+						{
+							"name": "Get all permissions",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/permissions/all",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"permissions",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"REPORT\",\r\n    \"description\": \"Ability to report one channel, video or an user.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/permissions/create",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"permissions",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"REPORT\",\r\n    \"description\": \"Ability to report one channel, video or an user.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/permissions/REPORT",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"permissions",
+										"REPORT"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/permissions/REPORT",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"permissions",
+										"REPORT"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Create a new role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"MODERATOR\",\r\n  \"description\": \"Moderator role\",\r\n  \"permissions\": [\"BAN_USER\",\"MUTE_USER\",\"REPORT\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/roles/create",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"roles",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all roles",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/roles/all",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"roles",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"MODERATOR\",\r\n  \"description\": \"User responsible for monitoring live streams, managing chat, and enforcing community guidelines.\",\r\n  \"permissions\": [\"BAN_USER\",\"MUTE_USER\",\"REPORT\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/roles/MODERATOR",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"roles",
+										"MODERATOR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/roles/MODERATORhehe",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"roles",
+										"MODERATORhehe"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get all users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user's information",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users/personal",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users",
+										"personal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"date_of_birth\": \"2004-10-28\",\r\n    \"middleName\": \"Quoc\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio 123123123\",\r\n    \"chanelName\": \"testchannel\",\r\n    \"following\": [],\r\n    \"followers\": [],\r\n    \"roles\": [\"USER\"]  \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users/30",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users",
+										"30"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_IDENTITY}}/identity/users/31",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_IDENTITY}}",
+									"path": [
+										"identity",
+										"users",
+										"31"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Video",
+			"item": [
+				{
+					"name": "upload new video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": [
+										"/D:/Mixi Funny Moment 27： Tổng hợp những tình huống vui vui trên stream của Độ Mixi..mp4",
+										"/D:/1409899-uhd_3840_2160_25fps.mp4"
+									]
+								},
+								{
+									"key": "thumbnailFile",
+									"type": "file",
+									"src": "/D:/OIP.jpg"
+								},
+								{
+									"key": "title",
+									"value": "Mixi funny moments",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Chào mừng tới kênh của tui!",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "isLive",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/upload",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"upload"
+							],
+							"query": [
+								{
+									"key": "videoFile",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update video",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/1",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Identity",
+					"item": [
+						{
+							"name": "Auth",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"let token = response.result.token;\r",
+													"pm.environment.set(\"AUTH_TOKEN\", token);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"tqanh\",\r\n    \"password\": \"Tranquocanh@123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/auth/login",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Logout",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDQ4Mjg5MTUsImlhdCI6MTc0NDgyNTMxNSwianRpIjoiNzcxN2I3NzYtZDE3My00ZGNiLTg5OGUtNDRjOWE5NTNmODU2Iiwic2NvcGUiOiJST0xFX0FETUlOIn0.t9YEk_ukwzSW7JRsnH8XIHGpDoXgRs92FxSX-MJZdLdXoYVkHhhWqJhYQgPkpUfcub1cCeiSVLvmI_XNedYyCg\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/auth/logout",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Introspect",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiVHJRQW5oaCIsImV4cCI6MTc0NDgxNzI1NiwiaWF0IjoxNzQ0ODEzNjU2LCJqdGkiOiJjZTU5MjY5OS0xNmFiLTRjNjktYWU1Ni1lN2EyMjk3M2ZjYzEiLCJzY29wZSI6IiJ9.APOrEEh4ee1t1AsgnRI2ExMiJCsj5p8cZk-kKsSGlF24RLfm0bMpBh90LpkNuoannc4Oxlxqj-HWvN0rHX6uNw\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/auth/introspect",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"auth",
+												"introspect"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Register",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"tqanh\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"00769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Hello! Welcome to my channel.\",\r\n    \"chanelName\": \"TrQAnhh\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/auth/register",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"let token = response.result.token;\r",
+													"pm.environment.set(\"AUTH_TOKEN\", token);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlY2hvdmVyc2UuY29tIiwic3ViIjoiYWRtaW4iLCJleHAiOjE3NDQ4MjkyOTMsImlhdCI6MTc0NDgyNTY5MywianRpIjoiYjQ5MTYyM2YtMDJjMC00NGJhLThiODMtNTY4YzUyZjQ0NTFlIiwic2NvcGUiOiJST0xFX0FETUlOIn0.vxqODQcHvOsrCkQuH3GYNc-XTq6GzYEnoJMGmZ2RRZ84MPZcSxGXx2U4n-pwQlxXJVrXN_dR7klabEOhouYpQw\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/auth/refresh-token",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"auth",
+												"refresh-token"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Permission",
+							"item": [
+								{
+									"name": "Get all permissions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/permissions/all",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"permissions",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new permission",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"REPORT\",\r\n    \"description\": \"Ability to report one channel, video or an user.\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/permissions/create",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"permissions",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update a permission",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"REPORT\",\r\n    \"description\": \"Ability to report one channel, video or an user.\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/permissions/REPORT",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"permissions",
+												"REPORT"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a permission",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/permissions/REPORT",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"permissions",
+												"REPORT"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Role",
+							"item": [
+								{
+									"name": "Create a new role",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"MODERATOR\",\r\n  \"description\": \"Moderator role\",\r\n  \"permissions\": [\"BAN_USER\",\"MUTE_USER\",\"REPORT\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/roles/create",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"roles",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all roles",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": []
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/roles/all",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"roles",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update a role",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"MODERATOR\",\r\n  \"description\": \"User responsible for monitoring live streams, managing chat, and enforcing community guidelines.\",\r\n  \"permissions\": [\"BAN_USER\",\"MUTE_USER\",\"REPORT\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/roles/MODERATOR",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"roles",
+												"MODERATOR"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a role",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/roles/MODERATOR",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"roles",
+												"MODERATOR"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "Get all users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get user's information",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/personal",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"users",
+												"personal"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get user by user's id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/42",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"users",
+												"42"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update a user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"date_of_birth\": \"2004-10-28\",\r\n    \"middleName\": \"Quoc\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio 123123123\",\r\n    \"chanelName\": \"testchannel\",\r\n    \"following\": [],\r\n    \"followers\": [],\r\n    \"roles\": [\"USER\"]  \r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/30",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"users",
+												"30"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete a user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/30",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"identity",
+												"users",
+												"30"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "Create user's profile",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 26,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/internal/user",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"internal",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a profile by user's id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/42",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"42"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a profile by user's id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Hello! Welcome to my channel!\",\r\n    \"chanelName\": \"TrQAnhh\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/42",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"42"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a profile by user's id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/17",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"17"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user avatar",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/avatar/42",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"avatar",
+										"42"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user cover",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AUTH_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/cover/42",
+									"protocol": "{{PROTOCOL}}",
+									"host": [
+										"{{SERVER_IP}}"
+									],
+									"port": "{{PORT_GATEWAY}}",
+									"path": [
+										"api",
+										"profile",
+										"user",
+										"cover",
+										"42"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

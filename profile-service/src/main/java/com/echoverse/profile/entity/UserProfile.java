@@ -66,7 +66,6 @@ public class UserProfile {
         this.updatedt = new Date();
     }
 
-
-
-
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    boolean isDeleted;
 }

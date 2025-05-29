@@ -1,6 +1,6 @@
 package identityservice.exception;
 
-import identityservice.dto.response.ApiResponse;
+import identityservice.dto.response.ApiResponseDto;
 import jakarta.validation.ConstraintViolation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -17,16 +17,16 @@ public class GlobalExceptionHandler {
     private static final String MIN_ATTRIBUTE = "min";
 
     @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<ApiResponse> handleRuntimeException(RuntimeException e) {
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(400);
-        apiResponse.setMessage(e.getMessage());
+    ResponseEntity<ApiResponseDto> handleRuntimeException(RuntimeException e) {
+        ApiResponseDto apiResponseDto = new ApiResponseDto();
+        apiResponseDto.setCode(400);
+        apiResponseDto.setMessage(e.getMessage());
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.badRequest().body(apiResponseDto);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    ResponseEntity<ApiResponseDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         String enumKey = e.getFieldError().getDefaultMessage();
         ErrorCode errorCode = ErrorCode.valueOf(enumKey);
         Map<String, Object> attributes = null;
@@ -39,13 +39,13 @@ public class GlobalExceptionHandler {
             // log here
         }
 
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(errorCode.getCode());
-        apiResponse.setMessage(Objects.nonNull(attributes) ? mapAttribute(errorCode.getMessage(), attributes) : errorCode.getMessage());
+        ApiResponseDto apiResponseDto = new ApiResponseDto();
+        apiResponseDto.setCode(errorCode.getCode());
+        apiResponseDto.setMessage(Objects.nonNull(attributes) ? mapAttribute(errorCode.getMessage(), attributes) : errorCode.getMessage());
 
         return ResponseEntity
                 .status(errorCode.getHttpStatusCode())
-                .body(apiResponse);
+                .body(apiResponseDto);
     }
 
     private String mapAttribute(String message, Map<String, Object> attributes) {
@@ -54,32 +54,32 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handleAppException(AppException e) {
+    ResponseEntity<ApiResponseDto> handleAppException(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(errorCode.getCode());
-        apiResponse.setMessage(errorCode.getMessage());
+        ApiResponseDto apiResponseDto = new ApiResponseDto();
+        apiResponseDto.setCode(errorCode.getCode());
+        apiResponseDto.setMessage(errorCode.getMessage());
 
         return ResponseEntity
                 .status(errorCode.getHttpStatusCode())
-                .body(apiResponse);
+                .body(apiResponseDto);
     }
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handleException(Exception e) {
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(ErrorCode.UNCATEGORIZED.getCode());
-        apiResponse.setMessage(ErrorCode.UNCATEGORIZED.getMessage());
+    ResponseEntity<ApiResponseDto> handleException(Exception e) {
+        ApiResponseDto apiResponseDto = new ApiResponseDto();
+        apiResponseDto.setCode(ErrorCode.UNCATEGORIZED.getCode());
+        apiResponseDto.setMessage(ErrorCode.UNCATEGORIZED.getMessage());
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.badRequest().body(apiResponseDto);
     }
 
     @ExceptionHandler(value = AccessDeniedException.class)
-    ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException e) {
+    ResponseEntity<ApiResponseDto> handleAccessDeniedException(AccessDeniedException e) {
         ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
 
         return ResponseEntity.status(errorCode.getHttpStatusCode()).body(
-                ApiResponse.builder()
+                ApiResponseDto.builder()
                         .code(errorCode.getCode())
                         .message(errorCode.getMessage())
                         .build()

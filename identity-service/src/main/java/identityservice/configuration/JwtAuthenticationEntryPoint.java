@@ -1,7 +1,7 @@
 package identityservice.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import identityservice.dto.response.ApiResponse;
+import identityservice.dto.response.ApiResponseDto;
 import identityservice.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,12 +19,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Ac
     private void handleErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         response.setStatus(errorCode.getHttpStatusCode().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        ApiResponse apiResponse = ApiResponse.builder()
+        ApiResponseDto apiResponseDto = ApiResponseDto.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
                 .build();
         ObjectMapper objectMapper = new ObjectMapper();
-        response.getWriter().write(objectMapper.writeValueAsString(apiResponse));
+        response.getWriter().write(objectMapper.writeValueAsString(apiResponseDto));
         response.flushBuffer();
     }
 

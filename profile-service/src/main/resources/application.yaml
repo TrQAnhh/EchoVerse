@@ -4,22 +4,5 @@ server:
     context-path: /profile
 
 spring:
-  datasource:
-    url: jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:5432/postgres?user=postgres.nhlstgbklzxwzoxdvdnr&password=7QP7w9mU8SADZu46
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 15
-      minimum-idle: 10
   application:
     name: profile-service
-
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-

@@ -25,38 +25,38 @@ public class AuthenticationController {
     UserService userService;
 
     @PostMapping("/register")
-    ApiResponse<UserResponseDto> register(@RequestBody @Valid UserCreationRequestDto userDto) {
-        return ApiResponse.<UserResponseDto>builder()
+    ApiResponseDto<UserResponseDto> register(@RequestBody @Valid UserCreationRequestDto userDto) {
+        return ApiResponseDto.<UserResponseDto>builder()
                 .result(userService.createUser(userDto))
                 .build();
     }
 
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponseDto> login(@RequestBody @Valid AuthenticationRequestDto authenticationRequestDto) {
+    ApiResponseDto<AuthenticationResponseDto> login(@RequestBody @Valid AuthenticationRequestDto authenticationRequestDto) {
         var result = authenticationService.login(authenticationRequestDto);
-        return ApiResponse.<AuthenticationResponseDto>builder()
+        return ApiResponseDto.<AuthenticationResponseDto>builder()
                 .result(result).build();
     }
 
     @PostMapping("/logout")
-    public ApiResponse<Void> logout(@RequestBody @Valid LogoutRequestDto logoutRequestDto) throws ParseException, JOSEException {
+    public ApiResponseDto<Void> logout(@RequestBody @Valid LogoutRequestDto logoutRequestDto) throws ParseException, JOSEException {
         authenticationService.logout(logoutRequestDto);
-        return ApiResponse.<Void>builder().code(200).message("user logout successfully").build();
+        return ApiResponseDto.<Void>builder().code(200).message("user logout successfully").build();
     }
 
     @PostMapping("/introspect")
-    public ApiResponse<IntrospectResponseDto> introspect(@RequestBody @Valid IntrospectRequestDto introspectRequestDto) throws ParseException, JOSEException {
+    public ApiResponseDto<IntrospectResponseDto> introspect(@RequestBody IntrospectRequestDto introspectRequestDto) throws ParseException, JOSEException {
         var result = authenticationService.introspect(introspectRequestDto);
-        ApiResponse<IntrospectResponseDto> apiResponse = new ApiResponse<>();
-        apiResponse.setCode(200);
-        apiResponse.setResult(result);
-        return apiResponse;
+        ApiResponseDto<IntrospectResponseDto> apiResponseDto = new ApiResponseDto<>();
+        apiResponseDto.setCode(200);
+        apiResponseDto.setResult(result);
+        return apiResponseDto;
     }
 
     @PostMapping("/refresh-token")
-    public ApiResponse<RefreshTokenResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto) throws ParseException, JOSEException {
+    public ApiResponseDto<RefreshTokenResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto) throws ParseException, JOSEException {
         var result = authenticationService.refreshToken(refreshTokenRequestDto);
-        return ApiResponse.<RefreshTokenResponseDto>builder()
+        return ApiResponseDto.<RefreshTokenResponseDto>builder()
                 .result(result)
                 .code(200)
                 .build();

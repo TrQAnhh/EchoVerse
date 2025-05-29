@@ -48,14 +48,14 @@ public class UserService {
 
 
         HashSet<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByRoleName(PredefinedRole.USER_ROLE));
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
         user = userRepository.save(user);
 
         var profileRequest = profileMapper.toProfileCreationRequest(userDto);
         profileRequest.setUserId(user.getId());
-        System.out.println(profileRequest);
+
         var profile = profileClient.createProfile(profileRequest);
         log.info("profile: {}", profile);
 
@@ -63,50 +63,50 @@ public class UserService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponseDto> getUsers(Long id) {
-        if (id != null) {
-            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-            log.info(user.getRoles().toString());
-
-            return List.of(userMapper.toUserResponse(user));
-        }
+    public List<UserResponseDto> getUsers() {
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponseDto getUser(Long id) {
+            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+            log.info(user.getRoles().toString());
+
+            return userMapper.toUserResponse(user);
+    }
+
+    @PostAuthorize("returnObject.id.toString() == authentication.name")
     public UserResponseDto getMyInfo() {
         var context = SecurityContextHolder.getContext();
-        String username = context.getAuthentication().getName();
+        long userId = Long.parseLong(context.getAuthentication().getName());
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
+        var userProfile = profileClient.getProfileByUserId(userId);
 
-        return userMapper.toUserResponse(user);
+        return userMapper.toUserResponse(user)
+                .toBuilder()
+                .profile(userProfile.getResult())
+                .build();
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
     public UserResponseDto updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.userUpdate(user, userUpdateRequestDto);
         user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
 
-        HashSet<Role> roles = new HashSet<>();
-        for (String roleName : userUpdateRequestDto.getRoles()) {
-            Role role = roleRepository.findByRoleName(roleName);
-            if (role != null) {
-                roles.add(role);
-            } else {
-                log.warn("Role with name '{}' not found", roleName);
-            }
-        }
-
-        user.setRoles(roles);
+        var roles = roleRepository.findAllById(userUpdateRequestDto.getRoles());
+        user.setRoles(new HashSet<>(roles));
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
+        user.setDeleted(true);
+        userRepository.save(user);
+    }
 }
