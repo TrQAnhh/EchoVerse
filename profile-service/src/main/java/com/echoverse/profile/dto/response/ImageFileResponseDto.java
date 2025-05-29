@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ImageFileResponseDto {
+    long userId;
     String originalFileName;
     String url;
 }

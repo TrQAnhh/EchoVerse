@@ -1,6 +1,7 @@
 package com.echoverse.profile.mapper;
 
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
 import org.mapstruct.Mapping;
@@ -27,8 +28,8 @@ public interface UserProfileMapper {
     @Mapping(target = "updatedt", ignore = true)
     UserProfile toUserProfile(ProfileCreationRequestDto request);
 
-
+    @Mapping(source = "userId", target = "userId")
     UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
-    void profileUpdate(@MappingTarget UserProfile profile, ProfileCreationRequestDto request);
+    void updateUserProfile(@MappingTarget UserProfile profile, ProfileUpdateRequestDto request);
 }

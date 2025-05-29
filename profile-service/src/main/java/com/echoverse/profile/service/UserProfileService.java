@@ -1,6 +1,7 @@
 package com.echoverse.profile.service;
 
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.ImageFileResponseDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
@@ -12,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,53 +49,56 @@ public class UserProfileService {
         return userProfiles;
     }
 
-    public UserProfileResponseDto getProfile(long profileId) {
-        UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
+    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    public UserProfileResponseDto getProfile(long userId) {
+        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    public UserProfileResponseDto editProfile(long profileId, ProfileCreationRequestDto request) {
-        UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
+    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    public UserProfileResponseDto editProfile(long userId, ProfileUpdateRequestDto request) {
+        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
-        userProfileMapper.profileUpdate(userProfile, request);
+        userProfileMapper.updateUserProfile(userProfile, request);
         userProfile = userProfileRepository.save(userProfile);
 
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-    public ImageFileResponseDto editUserAvatar(long profileId, MultipartFile file) throws IOException {
-        return updateProfileImage(profileId, file, UserProfile::setAvatar);
+    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    public ImageFileResponseDto editUserAvatar(long userId, MultipartFile file) throws IOException {
+        return updateProfileImage(userId, file, UserProfile::setAvatar);
     }
 
-    public ImageFileResponseDto editUserCover(long profileId, MultipartFile file) throws IOException {
-        return updateProfileImage(profileId, file, UserProfile::setCoverImage);
+    @PostAuthorize("T(String).valueOf(returnObject.userId) == authentication.name")
+    public ImageFileResponseDto editUserCover(long userId, MultipartFile file) throws IOException {
+        return updateProfileImage(userId, file, UserProfile::setCoverImage);
     }
 
     private ImageFileResponseDto updateProfileImage(
-            long profileId,
+            long userId,
             MultipartFile file,
             BiConsumer<UserProfile, String> setter
     ) throws IOException {
-        String currentUserId = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-        UserProfile profile = userProfileRepository.findById(profileId)
+
+        UserProfile profile = userProfileRepository.findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
-        if (!String.valueOf(profile.getUserId()).equals(currentUserId)) {
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
-        }
+
         ImageFileResponseDto img = uploadImageService.uploadImage(file);
         setter.accept(profile, img.getUrl());
         userProfileRepository.save(profile);
-        return img;
+        return ImageFileResponseDto.builder()
+                .userId(userId)
+                .originalFileName(img.getOriginalFileName())
+                .url(img.getUrl())
+                .build();
     }
 
-
-    public void deleteProfile(long profileId) {
-        UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(
+    public void deleteProfile(long userId) {
+        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         userProfile.setDeleted(true);

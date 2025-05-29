@@ -1,5 +1,6 @@
 package com.echoverse.profile.dto.request;
 
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,8 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfileCreationRequestDto {
-    long userId;
+public class ProfileUpdateRequestDto {
     String email;
     String firstName;
     String lastName;

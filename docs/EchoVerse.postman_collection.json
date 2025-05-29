@@ -41,12 +41,22 @@
 					"response": []
 				},
 				{
-					"name": "Get a profile",
+					"name": "Get a profile by user's id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/10",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/42",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -55,20 +65,30 @@
 							"path": [
 								"profile",
 								"user",
-								"10"
+								"42"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update user's profile",
+					"name": "Update a profile by user's id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 28,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanhNewEmail@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+							"raw": "{\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanhl@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,7 +96,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/10",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/42",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -85,19 +105,29 @@
 							"path": [
 								"profile",
 								"user",
-								"10"
+								"42"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete a user's profile by profile's id",
+					"name": "Delete a profile by user's id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/14",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/41",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -106,7 +136,7 @@
 							"path": [
 								"profile",
 								"user",
-								"14"
+								"41"
 							]
 						}
 					},
@@ -138,7 +168,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/avatar/10",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/avatar/42",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -148,7 +178,7 @@
 								"profile",
 								"user",
 								"avatar",
-								"10"
+								"42"
 							]
 						}
 					},
@@ -175,12 +205,12 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/D:/Quốc Anh/_DSC7786.jpg"
+									"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/cover/10",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/cover/42",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -190,7 +220,7 @@
 								"profile",
 								"user",
 								"cover",
-								"10"
+								"42"
 							]
 						}
 					},
@@ -862,6 +892,106 @@
 			]
 		},
 		{
+			"name": "Video",
+			"item": [
+				{
+					"name": "upload new video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": [
+										"/D:/Mixi Funny Moment 27： Tổng hợp những tình huống vui vui trên stream của Độ Mixi..mp4",
+										"/D:/1409899-uhd_3840_2160_25fps.mp4"
+									]
+								},
+								{
+									"key": "thumbnailFile",
+									"type": "file",
+									"src": "/D:/OIP.jpg"
+								},
+								{
+									"key": "title",
+									"value": "Mixi funny moments",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Chào mừng tới kênh của tui!",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "isLive",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/upload",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"upload"
+							],
+							"query": [
+								{
+									"key": "videoFile",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update video",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/1",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{SERVER_IP}}"
+							],
+							"port": "{{PORT_VIDEO}}",
+							"path": [
+								"video",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Gateway",
 			"item": [
 				{
@@ -888,20 +1018,13 @@
 									],
 									"request": {
 										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "",
-													"type": "string"
-												}
-											]
+											"type": "noauth"
 										},
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+											"raw": "{\r\n    \"username\": \"tqanh\",\r\n    \"password\": \"Tranquocanh@123\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1007,7 +1130,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"username\": \"TLBNgoc\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"baongoc2801@gmail.com\",\r\n    \"firstName\": \"Ngoc\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Le Bao\",\r\n    \"phoneNumber\": \"0123456789\",\r\n    \"dob\": \"2004-01-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+											"raw": "{\r\n    \"username\": \"tqanh\",\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"00769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Hello! Welcome to my channel.\",\r\n    \"chanelName\": \"TrQAnhh\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1490,7 +1613,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/37",
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/identity/users/42",
 											"protocol": "{{PROTOCOL}}",
 											"host": [
 												"{{SERVER_IP}}"
@@ -1500,7 +1623,7 @@
 												"api",
 												"identity",
 												"users",
-												"37"
+												"42"
 											]
 										}
 									},
@@ -1630,7 +1753,7 @@
 							"response": []
 						},
 						{
-							"name": "Get a profile",
+							"name": "Get a profile by user's id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1645,7 +1768,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/10",
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/42",
 									"protocol": "{{PROTOCOL}}",
 									"host": [
 										"{{SERVER_IP}}"
@@ -1655,14 +1778,14 @@
 										"api",
 										"profile",
 										"user",
-										"10"
+										"42"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update user's profile",
+							"name": "Update a profile by user's id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1678,7 +1801,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": 28,\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanhl@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Test bio\",\r\n    \"chanelName\": \"testchannel\"\r\n}",
+									"raw": "{\r\n    \"password\": \"Tranquocanh@123\",\r\n    \"email\": \"tranqanh2810@gmail.com\",\r\n    \"firstName\": \"Anh\",\r\n    \"lastName\": \"Tran\",\r\n    \"middleName\": \"Quoc\",\r\n    \"phoneNumber\": \"0769769750\",\r\n    \"dob\": \"2004-10-28\",\r\n    \"address\": \"123 Test St\",\r\n    \"bio\": \"Hello! Welcome to my channel!\",\r\n    \"chanelName\": \"TrQAnhh\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1686,7 +1809,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/10",
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/42",
 									"protocol": "{{PROTOCOL}}",
 									"host": [
 										"{{SERVER_IP}}"
@@ -1696,14 +1819,14 @@
 										"api",
 										"profile",
 										"user",
-										"10"
+										"42"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Delete a user's profile by profile's id",
+							"name": "Delete a profile by user's id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1760,7 +1883,7 @@
 									]
 								},
 								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/avatar/10",
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/avatar/42",
 									"protocol": "{{PROTOCOL}}",
 									"host": [
 										"{{SERVER_IP}}"
@@ -1771,7 +1894,7 @@
 										"profile",
 										"user",
 										"avatar",
-										"10"
+										"42"
 									]
 								}
 							},
@@ -1798,12 +1921,12 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/D:/Quốc Anh/_DSC7786.jpg"
+											"src": "postman-cloud:///1f02902e-fddf-46a0-b442-9188b3d2614d"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/cover/10",
+									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/cover/42",
 									"protocol": "{{PROTOCOL}}",
 									"host": [
 										"{{SERVER_IP}}"
@@ -1814,7 +1937,7 @@
 										"profile",
 										"user",
 										"cover",
-										"10"
+										"42"
 									]
 								}
 							},

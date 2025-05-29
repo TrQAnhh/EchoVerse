@@ -12,20 +12,14 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponseDto {
     long id;
+    long userId;
     String email;
-
     String firstName;
-
     String lastName;
-
     String middleName;
-
     String phoneNumber;
     LocalDate dob;
-
     String address;
-
     String bio;
-
     String chanelName;
 }

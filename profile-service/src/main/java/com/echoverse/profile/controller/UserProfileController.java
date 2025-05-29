@@ -1,6 +1,7 @@
 package com.echoverse.profile.controller;
 
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
+import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.ApiResponseDto;
 import com.echoverse.profile.dto.response.ImageFileResponseDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
@@ -32,40 +33,40 @@ public class UserProfileController {
                 .result(userProfileService.getAllProfiles()).build();
     }
 
-    @GetMapping("/user/{id}")
-    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long id) {
+    @GetMapping("/user/{userId}")
+    ApiResponseDto<UserProfileResponseDto> getProfile(@PathVariable long userId) {
         return ApiResponseDto.<UserProfileResponseDto>builder()
-                .result(userProfileService.getProfile(id)).build();
+                .result(userProfileService.getProfile(userId)).build();
     }
 
-    @PutMapping("/user/{id}")
-    ApiResponseDto<UserProfileResponseDto> editProfile(@PathVariable long id, @RequestBody ProfileCreationRequestDto request) {
+    @PutMapping("/user/{userId}")
+    ApiResponseDto<UserProfileResponseDto> editProfile(@PathVariable long userId, @RequestBody ProfileUpdateRequestDto request) {
         return ApiResponseDto.<UserProfileResponseDto>builder()
-                .result(userProfileService.editProfile(id, request)).build();
+                .result(userProfileService.editProfile(userId, request)).build();
     }
 
-    @PutMapping("/user/avatar/{id}")
-    ApiResponseDto<ImageFileResponseDto> editUserAvatar(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+    @PutMapping("/user/avatar/{userId}")
+    ApiResponseDto<ImageFileResponseDto> editUserAvatar(@PathVariable long userId, @RequestParam("file") MultipartFile file) throws IOException {
         return ApiResponseDto.<ImageFileResponseDto>builder()
                 .code(200)
-                .result(userProfileService.editUserAvatar(id,file))
+                .result(userProfileService.editUserAvatar(userId,file))
                 .build();
     }
 
-    @PutMapping("/user/cover/{id}")
-    ApiResponseDto<ImageFileResponseDto> editUserCover(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+    @PutMapping("/user/cover/{userId}")
+    ApiResponseDto<ImageFileResponseDto> editUserCover(@PathVariable long userId, @RequestParam("file") MultipartFile file) throws IOException {
         return ApiResponseDto.<ImageFileResponseDto>builder()
                 .code(200)
-                .result(userProfileService.editUserCover(id,file))
+                .result(userProfileService.editUserCover(userId,file))
                 .build();
     }
 
-    @DeleteMapping("/user/{id}")
-    ApiResponseDto<Void> deleteProfile(@PathVariable long id) {
-        userProfileService.deleteProfile(id);
+    @DeleteMapping("/user/{userId}")
+    ApiResponseDto<Void> deleteProfile(@PathVariable long userId) {
+        userProfileService.deleteProfile(userId);
         return ApiResponseDto.<Void>builder()
                 .code(200)
-                .message("Delete profile with profile's id: " + id + " successfully")
+                .message("Delete profile with user's id: " + userId + " successfully")
                 .build();
     }
 
