@@ -1,13 +1,13 @@
 package com.echoverse.profile.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
 import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Mapper;
-
 
 @Mapper(componentModel = "spring")
 public interface UserProfileMapper {
