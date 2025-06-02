@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/file-service/pom.xml" />
         <option value="$PROJECT_DIR$/video-service/pom.xml" />
+        <option value="$PROJECT_DIR$/chat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/event-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

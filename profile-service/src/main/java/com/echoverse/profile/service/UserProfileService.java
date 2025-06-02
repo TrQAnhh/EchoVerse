@@ -1,5 +1,13 @@
 package com.echoverse.profile.service;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
 import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.ImageFileResponseDto;
@@ -9,18 +17,11 @@ import com.echoverse.profile.exception.AppException;
 import com.echoverse.profile.exception.ErrorCode;
 import com.echoverse.profile.mapper.UserProfileMapper;
 import com.echoverse.profile.repository.UserProfileRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.util.List;
-import java.util.function.BiConsumer;
 
 @Service
 @RequiredArgsConstructor
@@ -42,25 +43,28 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
-
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserProfileResponseDto> getAllProfiles() {
-        List<UserProfileResponseDto> userProfiles = userProfileRepository.findAll().stream().map(userProfileMapper::toUserProfileResponse).toList();
+        List<UserProfileResponseDto> userProfiles = userProfileRepository.findAll().stream()
+                .map(userProfileMapper::toUserProfileResponse)
+                .toList();
         return userProfiles;
     }
 
     @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public UserProfileResponseDto getProfile(long userId) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
-                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+        UserProfile userProfile = userProfileRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
 
     @PreAuthorize("T(String).valueOf(#userId) == authentication.name")
     public UserProfileResponseDto editProfile(long userId, ProfileUpdateRequestDto request) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
-                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+        UserProfile userProfile = userProfileRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         userProfileMapper.updateUserProfile(userProfile, request);
         userProfile = userProfileRepository.save(userProfile);
@@ -79,12 +83,10 @@ public class UserProfileService {
     }
 
     private ImageFileResponseDto updateProfileImage(
-            long userId,
-            MultipartFile file,
-            BiConsumer<UserProfile, String> setter
-    ) throws IOException {
+            long userId, MultipartFile file, BiConsumer<UserProfile, String> setter) throws IOException {
 
-        UserProfile profile = userProfileRepository.findByUserId(userId)
+        UserProfile profile = userProfileRepository
+                .findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         ImageFileResponseDto img = uploadImageService.uploadImage(file);
@@ -98,11 +100,11 @@ public class UserProfileService {
     }
 
     public void deleteProfile(long userId) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(
-                () -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+        UserProfile userProfile = userProfileRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
 
         userProfile.setDeleted(true);
         userProfileRepository.save(userProfile);
     }
 }
-

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Long.parseLong;
@@ -46,12 +47,29 @@ public class VideoController {
 
     @PutMapping("/{videoId}")
     public ApiResponseDto<VideoResponseDto> updateVideo(
-            @RequestParam("videoId") String videoId,
+            @PathVariable("videoId") long videoId,
             @RequestBody() VideoUpdateRequestDto videoUpdateRequestDto
             ) {
         return ApiResponseDto.<VideoResponseDto>builder()
                 .code(200)
-                .result(videoService.updateVideo(parseLong(videoId), videoUpdateRequestDto))
+                .result(videoService.updateVideo(videoId, videoUpdateRequestDto))
+                .build();
+    }
+
+    @GetMapping("/{userId}")
+    public ApiResponseDto<List<VideoResponseDto>> getAllVideos(@PathVariable("userId") long userId) {
+        return ApiResponseDto.<List<VideoResponseDto>>builder()
+                .code(200)
+                .result(videoService.getAllByUserId(userId))
+                .build();
+    }
+
+    @DeleteMapping("/{videoId}")
+    public ApiResponseDto<Void> deleteVideo(@PathVariable("videoId") long videoId) {
+        videoService.deleteVideo(videoId);
+        return ApiResponseDto.<Void>builder()
+                .code(200)
+                .message("Delete video successfully")
                 .build();
     }
 }

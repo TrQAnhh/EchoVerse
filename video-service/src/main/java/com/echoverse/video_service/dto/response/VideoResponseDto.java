@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VideoResponseDto {
     Long id;
+    Long userId;
     String title;
     String description;
     String url;
     String thumbnailUrl;
     Long duration;
     LocalDateTime uploadDate;
-    Long createdBy;
     String status;
     Long views;
     Boolean isLive;

@@ -15,5 +15,4 @@ public class AppException extends RuntimeException {
     public ErrorCode getErrorCode() {
         return errorCode;
     }
-
 }
