@@ -1,5 +1,6 @@
 package com.echoverse.profile.mapper;
 
+import com.echoverse.profile.dto.response.UserContactResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -33,5 +34,6 @@ public interface UserProfileMapper {
     @Mapping(source = "coverImage", target = "coverImage")
     UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
+    UserContactResponseDto toUserContactResponse(UserProfile userProfile);
     void updateUserProfile(@MappingTarget UserProfile profile, ProfileUpdateRequestDto request);
 }
