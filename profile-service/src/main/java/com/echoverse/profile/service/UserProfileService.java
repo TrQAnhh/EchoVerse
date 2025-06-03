@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import com.echoverse.profile.dto.response.UserContactResponseDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,4 +108,12 @@ public class UserProfileService {
         userProfile.setDeleted(true);
         userProfileRepository.save(userProfile);
     }
+
+    public List<UserContactResponseDto> getAllContacts() {
+        List<UserContactResponseDto> contacts = userProfileRepository.findAll().stream()
+                .map(userProfileMapper::toUserContactResponse)
+                .toList();
+        return contacts;
+    }
+
 }

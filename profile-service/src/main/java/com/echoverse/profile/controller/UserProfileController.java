@@ -3,6 +3,7 @@ package com.echoverse.profile.controller;
 import java.io.IOException;
 import java.util.List;
 
+import com.echoverse.profile.dto.response.UserContactResponseDto;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,4 +79,12 @@ public class UserProfileController {
                 .message("Delete profile with user's id: " + userId + " successfully")
                 .build();
     }
+
+    @GetMapping("/user/contacts")
+    ApiResponseDto<List<UserContactResponseDto>> getUserContacts() {
+        return ApiResponseDto.<List<UserContactResponseDto>>builder()
+                .result(userProfileService.getAllContacts())
+                .build();
+    }
+
 }
