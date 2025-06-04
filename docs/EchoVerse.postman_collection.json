@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed149014-6b65-4560-bf22-616999e28f20",
+		"_postman_id": "9b5cfcfa-07c2-41c2-af2c-277a1dfcce5e",
 		"name": "EchoVerse",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37751783",
-		"_collection_link": "https://bigteam-7748.postman.co/workspace/EchoVerse~b4a74060-7bca-47a3-9756-8aaa9fa39daa/collection/37751783-ed149014-6b65-4560-bf22-616999e28f20?action=share&source=collection_link&creator=37751783"
+		"_exporter_id": "37386912"
 	},
 	"item": [
 		{
@@ -2202,6 +2201,183 @@
 								}
 							},
 							"response": []
+						}
+					]
+				},
+				{
+					"name": "Imterest",
+					"item": [
+						{
+							"name": "Images",
+							"item": [
+								{
+									"name": "Get images",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT}}/images",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT}}",
+											"path": [
+												"images"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete image",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/images/internal/5367d21c-e1f2-4d3c-936e-ec49752b93eb",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"images",
+												"internal",
+												"5367d21c-e1f2-4d3c-936e-ec49752b93eb"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get image detail",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/images/e643d8ce-c8e1-4315-85f1-3efb0b4209dd",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"images",
+												"e643d8ce-c8e1-4315-85f1-3efb0b4209dd"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Image",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{AUTH_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"Old town road\",\n  \"url\": \"https://cdn-images.vtv.vn/zoom/640_400/2019/8/6/old-town-road-video-gq-2019-051719-15650819736791834340278.jpg\",\n  \"creatorId\": \"2ad95c72-47aa-4430-bd47-46b75fba33b7\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/images",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"images"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Image",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/images/search?title=a",
+											"protocol": "{{PROTOCOL}}",
+											"host": [
+												"{{SERVER_IP}}"
+											],
+											"port": "{{PORT_GATEWAY}}",
+											"path": [
+												"api",
+												"images",
+												"search"
+											],
+											"query": [
+												{
+													"key": "title",
+													"value": "a"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}
