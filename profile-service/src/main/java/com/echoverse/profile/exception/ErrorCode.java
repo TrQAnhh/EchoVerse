@@ -1,12 +1,12 @@
 package com.echoverse.profile.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
+import lombok.Getter;
+
 @Getter
 public enum ErrorCode {
-
     INVALID_INPUT_VALUE(400, "Invalid input value", HttpStatus.BAD_REQUEST),
     INVALID_CREDENTIALS(401, "Invalid credentials", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(401, "Unauthenticated access", HttpStatus.UNAUTHORIZED),

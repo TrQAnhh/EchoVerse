@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <link rel="stylesheet" href="/profile/css/main.css" />
+</head>
+<body>
+
+<div id="login-page">
+    <div class="username-page-container">
+        <h2>Enter your user IDs</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="number" id="senderId" placeholder="Your ID (e.g. 42)" required />
+            </div>
+            <div class="form-group">
+                <input type="number" id="receiverId" placeholder="Receiver ID (e.g. 51)" required />
+            </div>
+            <button type="submit" class="primary">Connect</button>
+        </form>
+    </div>
+</div>
+
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>WebSocket Chat</h2>
+        </div>
+        <ul id="messageArea"></ul>
+        <form id="messageForm">
+            <div class="form-group">
+                <input type="text" id="message" placeholder="Type message..." required />
+                <button type="submit" class="primary">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/profile/js/main.js"></script>
+
+</body>
+</html>

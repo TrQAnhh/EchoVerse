@@ -1,13 +1,14 @@
 package com.echoverse.profile.mapper;
 
+import com.echoverse.profile.dto.response.UserContactResponseDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
 import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Mapper;
-
 
 @Mapper(componentModel = "spring")
 public interface UserProfileMapper {
@@ -33,5 +34,6 @@ public interface UserProfileMapper {
     @Mapping(source = "coverImage", target = "coverImage")
     UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
+    UserContactResponseDto toUserContactResponse(UserProfile userProfile);
     void updateUserProfile(@MappingTarget UserProfile profile, ProfileUpdateRequestDto request);
 }
