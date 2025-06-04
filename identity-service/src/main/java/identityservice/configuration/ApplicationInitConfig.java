@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
 
@@ -22,6 +23,10 @@ import java.util.HashSet;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Slf4j
 public class ApplicationInitConfig {
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     final PasswordEncoder passwordEncoder;
 

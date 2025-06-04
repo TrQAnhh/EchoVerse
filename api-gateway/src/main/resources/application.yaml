@@ -1,8 +1,10 @@
 server:
   port: 8888
 
+
 app:
   api-prefix: /api
+
 
 spring:
   application:
@@ -26,5 +28,11 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=${app.api-prefix}/video/**
+          filters:
+            - StripPrefix=1
+        - id: post_service
+          uri: https://imterest-be.fly.dev
+          predicates:
+            - Path=${app.api-prefix}/images/**
           filters:
             - StripPrefix=1
