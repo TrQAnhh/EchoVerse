@@ -16,6 +16,6 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
             "(c.userOneId = :user2 AND c.userTwoId = :user1)")
     Optional<Conversation> findByUserIds(@Param("user1") Long user1, @Param("user2") Long user2);
 
-    @Query("SELECT c FROM Conversation c WHERE c.userOneId = :userId OR c.userTwoId = :userId ORDER BY c.lastSentAt DESC")
+    @Query("SELECT c FROM Conversation c WHERE c.userOneId = :userId OR c.userTwoId = :userId")
     List<Conversation> findAllByUserId(@Param("userId") Long userId);
 }

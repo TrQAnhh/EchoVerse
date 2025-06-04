@@ -19,7 +19,7 @@ public class ChattingController {
     ConversationService conversationService;
 
     @MessageMapping("/chat.sendMessage")
-    public void sendMessage(@Payload ChatMessageDto chatMessageDto, Principal principal) {
+    public void sendMessage(@Payload ChatMessageDto chatMessageDto, Principal principal) throws Exception {
         conversationService.saveMessage(chatMessageDto);
         Long senderId = chatMessageDto.getSenderId();
         Long receiverId = chatMessageDto.getReceiverId();
