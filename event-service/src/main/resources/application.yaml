@@ -1,0 +1,8 @@
+server:
+    port: 8083
+    servlet:
+        context-path: /event
+
+spring:
+    application:
+        name: event-service
