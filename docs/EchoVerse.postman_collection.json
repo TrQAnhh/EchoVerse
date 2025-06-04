@@ -3,144 +3,12 @@
 		"_postman_id": "9b5cfcfa-07c2-41c2-af2c-277a1dfcce5e",
 		"name": "EchoVerse",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37751783",
-		"_collection_link": "https://bigteam-7748.postman.co/workspace/b4a74060-7bca-47a3-9756-8aaa9fa39daa/collection/37751783-ed149014-6b65-4560-bf22-616999e28f20?action=share&source=collection_link&creator=37751783"
 		"_exporter_id": "37386912"
 	},
 	"item": [
 		{
 			"name": "Profile",
 			"item": [
-				{
-					"name": "Chatting",
-					"item": [
-						{
-							"name": "get chat history",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{AUTH_TOKEN}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/conversations/messages/1",
-									"protocol": "{{PROTOCOL}}",
-									"host": [
-										"{{SERVER_IP}}"
-									],
-									"port": "{{PORT_PROFILE}}",
-									"path": [
-										"profile",
-										"conversations",
-										"messages",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get all conversations by user id",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{AUTH_TOKEN}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/conversations/42",
-									"protocol": "{{PROTOCOL}}",
-									"host": [
-										"{{SERVER_IP}}"
-									],
-									"port": "{{PORT_PROFILE}}",
-									"path": [
-										"profile",
-										"conversations",
-										"42"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete a conversation",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{AUTH_TOKEN}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/conversations/1",
-									"protocol": "{{PROTOCOL}}",
-									"host": [
-										"{{SERVER_IP}}"
-									],
-									"port": "{{PORT_PROFILE}}",
-									"path": [
-										"profile",
-										"conversations",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get all contacts",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{AUTH_TOKEN}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_PROFILE}}/profile/user/contacts",
-									"protocol": "{{PROTOCOL}}",
-									"host": [
-										"{{SERVER_IP}}"
-									],
-									"port": "{{PORT_PROFILE}}",
-									"path": [
-										"profile",
-										"user",
-										"contacts"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "Create user's profile",
 					"request": {
@@ -1112,29 +980,10 @@
 				{
 					"name": "update video by video id",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AUTH_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"My daily vlog in Vietnam\",\r\n    \"description\": \"Welcome to my channel!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/8",
+							"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_VIDEO}}/video/1",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{SERVER_IP}}"
@@ -1142,7 +991,7 @@
 							"port": "{{PORT_VIDEO}}",
 							"path": [
 								"video",
-								"8"
+								"1"
 							]
 						}
 					},
@@ -1940,143 +1789,6 @@
 				{
 					"name": "Profile",
 					"item": [
-						{
-							"name": "Chatting",
-							"item": [
-								{
-									"name": "get chat history",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{AUTH_TOKEN}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/conversations/messages/7",
-											"protocol": "{{PROTOCOL}}",
-											"host": [
-												"{{SERVER_IP}}"
-											],
-											"port": "{{PORT_GATEWAY}}",
-											"path": [
-												"api",
-												"profile",
-												"user",
-												"conversations",
-												"messages",
-												"7"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "get all conversations by user id",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{AUTH_TOKEN}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/conversations/42",
-											"protocol": "{{PROTOCOL}}",
-											"host": [
-												"{{SERVER_IP}}"
-											],
-											"port": "{{PORT_GATEWAY}}",
-											"path": [
-												"api",
-												"profile",
-												"user",
-												"conversations",
-												"42"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "delete a conversation",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{AUTH_TOKEN}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/conversations/6",
-											"protocol": "{{PROTOCOL}}",
-											"host": [
-												"{{SERVER_IP}}"
-											],
-											"port": "{{PORT_GATEWAY}}",
-											"path": [
-												"api",
-												"profile",
-												"user",
-												"conversations",
-												"6"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "get all contacts",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{AUTH_TOKEN}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{PROTOCOL}}://{{SERVER_IP}}:{{PORT_GATEWAY}}/api/profile/user/contacts",
-											"protocol": "{{PROTOCOL}}",
-											"host": [
-												"{{SERVER_IP}}"
-											],
-											"port": "{{PORT_GATEWAY}}",
-											"path": [
-												"api",
-												"profile",
-												"user",
-												"contacts"
-											]
-										}
-									},
-									"response": []
-								}
-							]
-						},
 						{
 							"name": "Create user's profile",
 							"request": {
