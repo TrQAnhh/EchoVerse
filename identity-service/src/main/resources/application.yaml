@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity
+
+
+spring:
+  application:
+    name: identity-service
+
+
+  datasource:
+    url: jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?user=postgres.rfzxgkyhjlyrricmhwug&password=4PQQ3YhecPxKTEt3
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+jwt:
+  signer-key: hrp3kHihWpRofMCfXC8H2OYqM7SHrt3eBMG6+Rxyys0rD2F0cT6zTkAgFtW6gBU4
+  valid-duration: 3600
+  refreshable-duration: 86400
+
+
+app:
+  services:
+    profile: http://localhost:8081/profile
+
