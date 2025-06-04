@@ -10,6 +10,7 @@ import com.echoverse.profile.mapper.ConversationMapper;
 import com.echoverse.profile.mapper.MessageMapper;
 import com.echoverse.profile.repository.ConversationRepository;
 import com.echoverse.profile.repository.MessageRepository;
+import com.echoverse.profile.utils.EncryptionUtil;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +28,19 @@ public class ConversationService {
     MessageRepository messageRepository;
     ConversationMapper conversationMapper;
     MessageMapper messageMapper;
+    EncryptionUtil encryptionUtil;
 
     public List<ConversationResponseDto> getAllByUserId(long userId) {
         var conversations = conversationRepository.findAllByUserId(userId);
         return conversationMapper.toConversationResponseDto(conversations);
     }
 
-    public List<MessageResponseDto> getAllMessages(long conversationId) {
+    public List<MessageResponseDto> getAllMessages(long conversationId) throws Exception {
         var conversation = conversationRepository.findById(conversationId);
         List<Message> messages = messageRepository.findByConversationId(conversationId);
+        for (Message message : messages) {
+            message.setMessage(encryptionUtil.decrypt(message.getMessage()));
+        }
         return messageMapper.toMessageResponseDto(messages);
     }
 
@@ -44,7 +49,7 @@ public class ConversationService {
     }
 
     @Transactional
-    public void saveMessage(ChatMessageDto dto) {
+    public void saveMessage(ChatMessageDto dto) throws Exception {
         Long sender = dto.getSenderId();
         Long receiver = dto.getReceiverId();
 
@@ -62,12 +67,13 @@ public class ConversationService {
             conversation = conversationRepository.save(conversation);
             conversationRepository.flush();
         }
+        String encryptedMessage = encryptionUtil.encrypt(dto.getContent());
 
         Message msg = Message.builder()
                 .conversation(conversation)
                 .senderId(sender)
                 .receiverId(receiver)
-                .message(dto.getContent())
+                .message(encryptedMessage)
                 .sentAt(LocalDateTime.now())
                 .isRead(false)
                 .messageType(dto.getMessageType())
@@ -80,7 +86,7 @@ public class ConversationService {
             conversation.getMessages().add(msg);
         }
 
-        conversation.setLastMessage(dto.getContent());
+        conversation.setLastMessage(encryptedMessage);
         conversation.setLastSentAt(msg.getSentAt());
         conversationRepository.save(conversation);
     }

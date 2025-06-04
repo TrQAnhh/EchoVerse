@@ -26,7 +26,7 @@ public class ConversationController {
     }
 
     @GetMapping("/messages/{conversationId}")
-    public ApiResponseDto<List<MessageResponseDto>> getAllMessages(@PathVariable long conversationId) {
+    public ApiResponseDto<List<MessageResponseDto>> getAllMessages(@PathVariable long conversationId) throws Exception {
         return ApiResponseDto.<List<MessageResponseDto>>builder()
                 .code(200)
                 .result(conversationService.getAllMessages(conversationId))
