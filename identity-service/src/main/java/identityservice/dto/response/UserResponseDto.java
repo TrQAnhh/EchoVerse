@@ -15,4 +15,5 @@ public class UserResponseDto {
     String username;
     UserProfileResponseDto profile;
     Set<RoleResponseDto> roles;
+    StreamerResponseDto streamer;
 }

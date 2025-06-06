@@ -5,12 +5,13 @@ import identityservice.dto.request.StreamerRequestDto;
 import identityservice.dto.response.StreamerResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -40,4 +41,31 @@ public class LivekitClient {
             throw new RuntimeException("Error from Streamer API: ", e);
         }
     }
+
+    public StreamerResponseDto getStreamerByEmail(String email) {
+        String url = EXPRESS_BASE_URL + "/streamer/get/email";
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("email", email);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        try {
+            ResponseEntity<StreamerResponseDto> response = restTemplate.postForEntity(url, request, StreamerResponseDto.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                throw new RuntimeException("Failed to get streamer by email. Status: " + response.getStatusCode());
+            }
+        } catch (HttpStatusCodeException e) {
+            String errorBody = e.getResponseBodyAsString();
+            log.error("Error response from Streamer API: {}", errorBody, e);
+            throw new RuntimeException("Error from Streamer API: ", e);
+        }
+    }
+
 }

@@ -105,9 +105,19 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOT_FOUND.getMessage()));
         var userProfile = profileClient.getProfileByUserId(userId);
 
+        log.info("user: {}", userProfile);
+
+        StreamerResponseDto streamerData = null;
+        try {
+            streamerData = livekitClient.getStreamerByEmail(userProfile.getResult().getEmail());
+        } catch (Exception e) {
+            log.warn("Email not found: {}", userProfile.getResult().getEmail());
+        }
+
         return userMapper.toUserResponse(user)
                 .toBuilder()
                 .profile(userProfile.getResult())
+                .streamer(streamerData)
                 .build();
     }
 
