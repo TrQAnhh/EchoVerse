@@ -2,8 +2,10 @@ package identityservice.service;
 
 import identityservice.constant.PredefinedRole;
 import identityservice.dto.request.ImterestRequestDto;
+import identityservice.dto.request.StreamerRequestDto;
 import identityservice.dto.request.UserCreationRequestDto;
 import identityservice.dto.request.UserUpdateRequestDto;
+import identityservice.dto.response.StreamerResponseDto;
 import identityservice.dto.response.UserResponseDto;
 import identityservice.entity.Role;
 import identityservice.entity.User;
@@ -14,6 +16,7 @@ import identityservice.mapper.UserMapper;
 import identityservice.repository.RoleRepository;
 import identityservice.repository.UserRepository;
 import identityservice.repository.httpclient.ImterestClient;
+import identityservice.repository.httpclient.LivekitClient;
 import identityservice.repository.httpclient.ProfileClient;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +43,7 @@ public class UserService {
     ProfileMapper profileMapper;
     ProfileClient profileClient;
     ImterestClient imterestClient;
+    LivekitClient livekitClient;
 
     public UserResponseDto createUser(UserCreationRequestDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
@@ -69,6 +73,13 @@ public class UserService {
 
         var imterestAccount = imterestClient.createUserImterest(imterestRequest);
         log.info("imterest: {}", imterestAccount);
+
+        StreamerRequestDto streamerRequestDto = new StreamerRequestDto();
+        streamerRequestDto.setName(userDto.getFirstName() +" " + userDto.getLastName());
+        streamerRequestDto.setEmail(userDto.getEmail());
+
+        var streamerData = livekitClient.StreamerRegister(streamerRequestDto);
+        log.info("streamer: {}", streamerData);
 
         return userMapper.toUserResponse(user);
     }
