@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @FeignClient(name = "profile-service", url = "${app.services.profile}",
 configuration = {AuthenticationRequestInterceptor.class})
 public interface ProfileClient {
@@ -19,4 +21,7 @@ public interface ProfileClient {
 
     @GetMapping("/internal/user/{userId}")
     ApiResponseDto<UserProfileResponseDto> getProfileByUserId(@PathVariable("userId") Long userId);
+
+    @GetMapping("/internal")
+    ApiResponseDto<List<UserProfileResponseDto>> getAllProfiles();
 }

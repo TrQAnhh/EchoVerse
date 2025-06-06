@@ -9,8 +9,12 @@ import com.echoverse.profile.dto.request.ProfileCreationRequestDto;
 import com.echoverse.profile.dto.request.ProfileUpdateRequestDto;
 import com.echoverse.profile.dto.response.UserProfileResponseDto;
 import com.echoverse.profile.entity.UserProfile;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface UserProfileMapper {
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "firstName", target = "firstName")
@@ -35,5 +39,6 @@ public interface UserProfileMapper {
     UserProfileResponseDto toUserProfileResponse(UserProfile userProfile);
 
     UserContactResponseDto toUserContactResponse(UserProfile userProfile);
+
     void updateUserProfile(@MappingTarget UserProfile profile, ProfileUpdateRequestDto request);
 }

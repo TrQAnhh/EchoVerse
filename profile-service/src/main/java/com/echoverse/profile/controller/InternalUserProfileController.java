@@ -11,11 +11,20 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InternalUserProfileController {
     UserProfileService userProfileService;
+
+    @GetMapping("/internal")
+    public ApiResponseDto<List<UserProfileResponseDto>> getAllProfiles() {
+        return ApiResponseDto.<List<UserProfileResponseDto>>builder()
+                .result(userProfileService.getAllProfiles())
+                .build();
+    }
 
     @PostMapping("/internal/user")
     UserProfileResponseDto createProfile(@RequestBody ProfileCreationRequestDto request) {

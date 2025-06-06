@@ -14,6 +14,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponseDto {
     long id;
+    long userId;
     String firstName;
     String middleName;
     String lastName;

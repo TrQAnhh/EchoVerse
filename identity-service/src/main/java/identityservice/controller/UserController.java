@@ -47,6 +47,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     ApiResponseDto<Void> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
         return ApiResponseDto.<Void>builder()
                 .code(200)
                 .message("Delete user with user's id: " + userId + " successfully")

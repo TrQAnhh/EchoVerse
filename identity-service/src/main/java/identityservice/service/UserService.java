@@ -5,8 +5,7 @@ import identityservice.dto.request.ImterestRequestDto;
 import identityservice.dto.request.StreamerRequestDto;
 import identityservice.dto.request.UserCreationRequestDto;
 import identityservice.dto.request.UserUpdateRequestDto;
-import identityservice.dto.response.StreamerResponseDto;
-import identityservice.dto.response.UserResponseDto;
+import identityservice.dto.response.*;
 import identityservice.entity.Role;
 import identityservice.entity.User;
 import identityservice.exception.AppException;
@@ -27,8 +26,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -86,7 +86,43 @@ public class UserService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponseDto> getUsers() {
-        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+        List<User> users = userRepository.findAll();
+        List<UserProfileResponseDto> profiles = profileClient.getAllProfiles().getResult();
+
+        Map<Long, UserProfileResponseDto> profileMap = profiles.stream()
+                .collect(Collectors.toMap(UserProfileResponseDto::getUserId, Function.identity()));
+
+        List<UserResponseDto> result = new ArrayList<>();
+
+        for (User user : users) {
+            UserResponseDto dto = userMapper.toUserResponse(user);
+            dto.setUsername(user.getUsername());
+
+            UserProfileResponseDto profileDto = profileMap.get(user.getId());
+            dto.setProfile(profileDto);
+
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                Set<RoleResponseDto> roleDtos = user.getRoles().stream().map(role -> {
+                    RoleResponseDto roleDto = RoleResponseDto.builder()
+                            .name(role.getName())
+                            .description(role.getDescription())
+                            .permissions(role.getPermissions() != null
+                                    ? role.getPermissions().stream()
+                                    .map(perm -> new PermissionResponseDto(perm.getName(), perm.getDescription()))
+                                    .collect(Collectors.toSet())
+                                    : null)
+                            .build();
+                    return roleDto;
+                }).collect(Collectors.toSet());
+
+                dto.setRoles(roleDtos);
+            } else {
+                dto.setRoles(null);
+            }
+
+            result.add(dto);
+        }
+        return result;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -121,7 +157,6 @@ public class UserService {
                 .build();
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
     public UserResponseDto updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
