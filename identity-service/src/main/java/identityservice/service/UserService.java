@@ -157,11 +157,14 @@ public class UserService {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.name")
     public UserResponseDto updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.userUpdate(user, userUpdateRequestDto);
-        user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
+        if (userUpdateRequestDto.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
+        }
 
         var roles = roleRepository.findAllById(userUpdateRequestDto.getRoles());
         user.setRoles(new HashSet<>(roles));

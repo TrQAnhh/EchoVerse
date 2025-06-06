@@ -1,7 +1,5 @@
 package identityservice.dto.request;
 
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
