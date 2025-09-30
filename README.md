@@ -1,5 +1,4 @@
 # EchoVerse
----
 **EchoVerse** is a live streaming platform with real-time chat, built with **Java Spring Boot microservices**. Users can watch live streams, interact with streamers, and chat with others in real time via Socket.IO.
 ---
 ## 🚀 Features
